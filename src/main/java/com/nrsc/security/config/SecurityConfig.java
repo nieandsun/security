@@ -17,19 +17,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http.authorizeRequests()
-//                .anyRequest()
-//                .authenticated()
-//                // .and()
-//                // .httpBasic()
-//                .and()
-//                .formLogin();
         http.formLogin()
-                .loginPage("/nrsc-login.html")
+                .loginPage("/authentication/require")
                 .loginProcessingUrl("/nrsc/signIn")
                 .and()
                 .authorizeRequests()
-                .antMatchers("/nrsc-login.html")
+                .antMatchers("/authentication/require", "/nrsc-login.html")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

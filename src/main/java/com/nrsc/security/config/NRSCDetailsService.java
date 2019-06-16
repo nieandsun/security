@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class MyUserDetailsService implements UserDetailsService {
+public class NRSCDetailsService implements UserDetailsService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
