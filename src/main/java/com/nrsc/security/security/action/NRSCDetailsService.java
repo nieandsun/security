@@ -1,4 +1,4 @@
-package com.nrsc.security.config;
+package com.nrsc.security.security.action;
 
 import com.nrsc.security.domain.NrscUser;
 import lombok.extern.slf4j.Slf4j;

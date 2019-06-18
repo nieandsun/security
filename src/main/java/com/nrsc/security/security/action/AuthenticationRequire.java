@@ -1,4 +1,4 @@
-package com.nrsc.security.controller;
+package com.nrsc.security.security.action;
 
 import com.nrsc.security.VO.ResultVO;
 import com.nrsc.security.enums.ResultEnum;
@@ -25,7 +25,7 @@ import java.io.IOException;
  */
 @RestController
 @Slf4j
-public class SecurityController {
+public class AuthenticationRequire {
     //用户在访问我们的项目时,如果需要身份认证,spring-security会根据
     //我在SecurityConfig中loginPage的配置跳转到我自定义的url即/authentication/require,
     //但在这个跳转之前spring-security会将我们的请求缓存到RequestCache的session里,
