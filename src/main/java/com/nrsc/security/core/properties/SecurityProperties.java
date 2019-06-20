@@ -1,0 +1,18 @@
+package com.nrsc.security.core.properties;
+
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
+
+/**
+ * "大盒子"类-----------------用于统一管理项目中所有由yml或properties文件传入的变量值
+ * Created By: Sun Chuan
+ * Created Date: 2019/6/20 22:13
+ */
+@Component //将此类注入到spring容器中
+@Data //不用写get set方法了
+@ConfigurationProperties(prefix = "nrsc.security") //指定以nrsc.security开头的配置会射入到该类中
+public class SecurityProperties {
+    //封装浏览器相关的属性
+    private BrowserProperties browser = new BrowserProperties();
+}

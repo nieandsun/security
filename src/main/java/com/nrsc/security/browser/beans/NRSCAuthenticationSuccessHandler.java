@@ -1,4 +1,4 @@
-package com.nrsc.security.security.beans;
+package com.nrsc.security.browser.beans;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;

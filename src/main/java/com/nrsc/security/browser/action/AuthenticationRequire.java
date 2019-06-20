@@ -1,9 +1,11 @@
-package com.nrsc.security.security.action;
+package com.nrsc.security.browser.action;
 
 import com.nrsc.security.VO.ResultVO;
+import com.nrsc.security.core.properties.SecurityProperties;
 import com.nrsc.security.enums.ResultEnum;
 import com.nrsc.security.utils.ResultVOUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
@@ -34,6 +36,9 @@ public class AuthenticationRequire {
 
     //spring-security提供的类,可以方便的进行重定向
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+    //如果用户输入以.html结尾的url时,跳转到从配置文件yml或properties里拿出配置的登陆页面
+    @Autowired
+    private SecurityProperties securityProperties;
 
     @RequestMapping("/authentication/require")
     @ResponseStatus(code = HttpStatus.UNAUTHORIZED)
@@ -50,10 +55,9 @@ public class AuthenticationRequire {
 
             //如果请求url以.html结尾跳转到我们自己写的登录页----在前后端分离的项目里一般不会这样做
             if (StringUtils.endsWithIgnoreCase(targetUrl, ".html")) {
-                redirectStrategy.sendRedirect(request, response, "/nrsc-login.html");
+                redirectStrategy.sendRedirect(request, response, securityProperties.getBrowser().getLoginPage());
             }
         }
-
         //如果有引发跳转的请求且不以html结尾
         //或者如果没有引发跳转的请求----即直接访问authentication/require
         //返回一个未认证的状态码并引导用户进行登陆

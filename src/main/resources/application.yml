@@ -1,0 +1,4 @@
+#nrsc:
+#  security:
+#    browser:
+#      loginPage: /OtherServer/other-login.html
