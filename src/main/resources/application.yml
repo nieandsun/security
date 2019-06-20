@@ -1,4 +1,5 @@
-#nrsc:
-#  security:
-#    browser:
-#      loginPage: /OtherServer/other-login.html
+nrsc:
+  security:
+    browser:
+      loginPage: /OtherServer/other-login.html
+      loginType: REDIRECT
