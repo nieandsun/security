@@ -27,7 +27,7 @@ public class NRSCDetailsService implements UserDetailsService {
         log.info("用户名为:" + username);
         //假设下面的密码是根据用户名获得的
         String password = passwordEncoder.encode("123456");
-        log.error("password:" + password);
+        log.info("password:" + password);
         //return new User(username, password, AuthorityUtils.commaSeparatedStringToAuthorityList("admin"));
 //        return new User(username, password, true,true,true,false,
 //                AuthorityUtils.commaSeparatedStringToAuthorityList("admin"));
