@@ -12,4 +12,6 @@ public class BrowserProperties {
     private String loginPage = "/nrsc-login.html";
     //指定默认的处理成功与处理失败的方法
     private LoginType loginType = LoginType.JSON;
+    //记住我的时间3600秒即1小时
+    private int rememberMeSeconds = 3600;
 }
