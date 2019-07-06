@@ -57,6 +57,9 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         ValidateCodeFilter validateCodeFilter = new ValidateCodeFilter();
         validateCodeFilter.setAuthenticationFailureHandler(NRSCAuthenticationFailureHandler);
+        validateCodeFilter.setSecurityProperties(securityProperties);
+        //调用afterPropertiesSet，初始化urls
+        validateCodeFilter.afterPropertiesSet();
 
         //将图形验证码的校验逻辑放在用户名和密码校验逻辑之前
         http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
