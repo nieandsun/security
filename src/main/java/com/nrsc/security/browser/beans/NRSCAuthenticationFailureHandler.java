@@ -3,6 +3,8 @@ package com.nrsc.security.browser.beans;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nrsc.security.core.properties.LoginType;
 import com.nrsc.security.core.properties.SecurityProperties;
+import com.nrsc.security.enums.ResultEnum;
+import com.nrsc.security.utils.ResultVOUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,7 +47,7 @@ public class NRSCAuthenticationFailureHandler extends SimpleUrlAuthenticationFai
             //设置返回内容的数据形式和编码格式
             httpServletResponse.setContentType("application/json;charset=UTF-8");
             //将抓到的错误信息以json数据的形式进行返回
-            httpServletResponse.getWriter().write(objectMapper.writeValueAsString(e));
+            httpServletResponse.getWriter().write(objectMapper.writeValueAsString(ResultVOUtil.error(ResultEnum.LOGINFAILURE.getCode(), e.getMessage())));
         } else {
             super.onAuthenticationFailure(httpServletRequest, httpServletResponse, e);
         }

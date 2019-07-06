@@ -1,6 +1,7 @@
 package com.nrsc.security.browser.config;
 
 import com.nrsc.security.core.properties.SecurityProperties;
+import com.nrsc.security.core.validate.code.ValidateCodeFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
@@ -53,33 +55,40 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.formLogin()
+        ValidateCodeFilter validateCodeFilter = new ValidateCodeFilter();
+        validateCodeFilter.setAuthenticationFailureHandler(NRSCAuthenticationFailureHandler);
+
+        //将图形验证码的校验逻辑放在用户名和密码校验逻辑之前
+        http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
+                .formLogin()
                 .loginPage("/authentication/require")//登陆时进入的url-->相当于进入登陆页面
                 .loginProcessingUrl("/nrsc/signIn")//告诉spring-security点击登陆时访问的url为/nrsc/signIn
                 // ---->当spring-security接收到此url的请求后,会自动调用
                 //com.nrsc.security.browser.action.NRSCDetailsService中的loadUserByUsername
-                //进行登陆校验
 
+                //进行登陆校验
                 .successHandler(NRSCAuthenticationSuccessHandler)//指定使用NRSCAuthenticationSuccessHandler处理登陆成功后的行为
                 .failureHandler(NRSCAuthenticationFailureHandler)//指定使用NNRSCAuthenticationFailureHandler处理登陆失败后的行为
                 .and()
+
                 //Remember相关配置
                 .rememberMe()
                 .tokenRepository(persistentTokenRepository())//指定使用的tokenRepository
                 .tokenValiditySeconds(securityProperties.getBrowser().getRememberMeSeconds())//指定记住我的时间（秒）
                 .userDetailsService(NRSCDetailsService)//指定进行登陆认证的UserDetailsService
+
                 .and()
                 .authorizeRequests()
-                .antMatchers("/authentication/require", securityProperties.getBrowser().getLoginPage())//指定不校验的url
+
+                //不进认证的url
+                .antMatchers("/code/image", "/authentication/require", securityProperties.getBrowser().getLoginPage())//指定不校验的url
                 .permitAll()
+
+                //除了不进行认证的url其他请求都需要认证
                 .anyRequest()
                 .authenticated()
+
                 .and()
                 .csrf().disable(); //关闭csrf
-//        http.httpBasic()
-//                .and()
-//                .authorizeRequests()
-//                .anyRequest()
-//                .authenticated();
     }
 }

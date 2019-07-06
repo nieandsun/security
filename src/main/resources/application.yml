@@ -2,7 +2,7 @@ nrsc:
   security:
     browser:
       loginPage: /nrsc-login.html
-      loginType: REDIRECT
+      loginType: JSON
 spring:
   datasource:
     #mysql版本为8.0.13
