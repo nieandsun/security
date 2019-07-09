@@ -65,7 +65,7 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin()
                 .loginPage("/authentication/require")//登陆时进入的url-->相当于进入登陆页面
-                .loginProcessingUrl("/nrsc/signIn")//告诉spring-security点击登陆时访问的url为/nrsc/signIn
+                .loginProcessingUrl("/authentication/form")//告诉spring-security点击登陆时访问的url为/authentication/form
                 // ---->当spring-security接收到此url的请求后,会自动调用
                 //com.nrsc.security.browser.action.NRSCDetailsService中的loadUserByUsername
 
@@ -84,7 +84,7 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
 
                 //不进认证的url
-                .antMatchers("/code/image", "/authentication/require", securityProperties.getBrowser().getLoginPage())//指定不校验的url
+                .antMatchers("/code/*", "/authentication/require", securityProperties.getBrowser().getLoginPage())//指定不校验的url
                 .permitAll()
 
                 //除了不进行认证的url其他请求都需要认证

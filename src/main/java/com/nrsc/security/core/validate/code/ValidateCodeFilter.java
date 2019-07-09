@@ -62,7 +62,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
             }
         }
         //登陆肯定要进行图形验证码的校验，所以这里直接把登陆的uri放到urls里
-        urls.add("/nrsc/signIn");
+        urls.add("/authentication/form");
     }
 
 

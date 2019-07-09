@@ -8,5 +8,8 @@ import lombok.Data;
  */
 @Data
 public class ValidateCodeProperties {
+    /**封装图片验证吗相关的属性*/
     private ImageCodeProperties image = new ImageCodeProperties();
+    /**封装短信验证吗相关的属性*/
+    private SmsCodeProperties sms = new SmsCodeProperties();
 }
