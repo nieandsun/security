@@ -1,6 +1,7 @@
 package com.nrsc.security.core.validate.code;
 
 import com.nrsc.security.core.properties.SecurityProperties;
+import com.nrsc.security.core.validate.code.image.ImageCodeGenerator;
 import com.nrsc.security.core.validate.code.sms.DefaultSmsCodeSender;
 import com.nrsc.security.core.validate.code.sms.SmsCodeSender;
 import org.springframework.beans.factory.annotation.Autowired;

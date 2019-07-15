@@ -1,6 +1,6 @@
 package com.nrsc.security.server.validate;
 
-import com.nrsc.security.core.validate.code.ImageCode;
+import com.nrsc.security.core.validate.code.image.ImageCode;
 import com.nrsc.security.core.validate.code.ValidateCodeGenerator;
 import org.springframework.web.context.request.ServletWebRequest;
 

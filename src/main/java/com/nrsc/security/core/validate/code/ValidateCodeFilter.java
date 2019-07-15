@@ -2,6 +2,7 @@ package com.nrsc.security.core.validate.code;
 
 
 import com.nrsc.security.core.properties.SecurityProperties;
+import com.nrsc.security.core.validate.code.image.ImageCode;
 import lombok.Data;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
@@ -36,7 +37,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
     //----------------------------下篇文章将研究一下InitializingBean接口----------------------------------
     /**
      * 用来存配置文件中指定的需要进行图形验证码校验的所有URL
-     *
+     * <p>
      * 这里将所有的url弄成了本类的一个属性，其实还有其他方式，比如说我们只把SecurityProperties设置到本类中
      * 然后每次请求过来时，都做一次字符串切割和uri匹配
      * 但是相比之下这种方式是更好的
@@ -44,10 +45,14 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
     //----------------------------下篇文章将研究一下InitializingBean接口----------------------------------
     private Set<String> urls = new HashSet<>();
 
-    /**拿到配置类*/
+    /**
+     * 拿到配置类
+     */
     private SecurityProperties securityProperties;
 
-    /**spring提供的匹配uri的工具类，可匹配正则*/
+    /**
+     * spring提供的匹配uri的工具类，可匹配正则
+     */
     private AntPathMatcher pathMatcher = new AntPathMatcher();
 
     @Override
@@ -102,7 +107,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
     private void validate(ServletWebRequest request) throws ServletRequestBindingException {
         //1.从session中取出ImageCode对象
         ImageCode codeInSession = (ImageCode) sessionStrategy.getAttribute(request,
-                ValidateCodeController.SESSION_KEY);
+                ValidateCodeProcessor.SESSION_KEY_PREFIX + "IMAGE");
         //2.获取请求中传过来的图形验证码字符串
         String codeInRequest = ServletRequestUtils.getStringParameter(request.getRequest(), "imageCode");
 
@@ -116,7 +121,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
         }
 
         if (codeInSession.isExpried()) {
-            sessionStrategy.removeAttribute(request, ValidateCodeController.SESSION_KEY);
+            sessionStrategy.removeAttribute(request, ValidateCodeProcessor.SESSION_KEY_PREFIX + "IMAGE");
             throw new ValidateCodeException("验证码已过期");
         }
 
@@ -124,6 +129,6 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
             throw new ValidateCodeException("验证码不匹配");
         }
         //4.走到这里说明校验已经通过,校验通过后该验证码就没啥用了,所以可以删除session中的ImageCode对象了
-        sessionStrategy.removeAttribute(request, ValidateCodeController.SESSION_KEY);
+        sessionStrategy.removeAttribute(request, ValidateCodeProcessor.SESSION_KEY_PREFIX + "IMAGE");
     }
 }

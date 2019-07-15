@@ -1,19 +1,14 @@
 package com.nrsc.security.core.validate.code;
 
-import com.nrsc.security.core.validate.code.sms.SmsCodeSender;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.social.connect.web.HttpSessionSessionStrategy;
-import org.springframework.social.connect.web.SessionStrategy;
-import org.springframework.web.bind.ServletRequestBindingException;
-import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.ServletWebRequest;
 
-import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import java.util.Map;
 
 /**
  * @author: Sun Chuan
@@ -22,55 +17,29 @@ import java.io.IOException;
 @RestController
 public class ValidateCodeController {
 
-    public static final String SESSION_KEY = "SESSION_KEY_IMAGE_CODE";
-
-    /**session操作工具类*/
-    private SessionStrategy sessionStrategy = new HttpSessionSessionStrategy();
-
-    /**图形验证码生成逻辑封装类*/
+    /**
+     * 收集系统中所有的 {@link ValidateCodeProcessor} 接口的实现,并将其存到Map中。
+     */
     @Autowired
-    private ValidateCodeGenerator imageCodeGenerator;
-
-    /**短信验证码生成逻辑封装类*/
-    @Autowired
-    private ValidateCodeGenerator smsCodeGenerator;
-
-    /**短信发送类*/
-    @Autowired
-    private SmsCodeSender smsCodeSender;
+    private Map<String, ValidateCodeProcessor> validateCodeProcessors;
 
     /**
-     * 生成图形验证码
+     * 创建验证码，根据验证码类型不同，调用不同的 {@link ValidateCodeProcessor}接口实现
      *
      * @param request
      * @param response
+     * @param type
+     * @throws Exception
      */
-    @GetMapping("/code/image")
-    public void createImageCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        //1.生成ImageCode对象
-        ImageCode imageCode = (ImageCode) imageCodeGenerator.generate(new ServletWebRequest(request));
-        //2.将ImageCode对象写入到session
-        sessionStrategy.setAttribute(new ServletWebRequest(request), SESSION_KEY, imageCode);
-        //3.将验证码写回到浏览器
-        ImageIO.write(imageCode.getImage(), "JPEG", response.getOutputStream());
+    @GetMapping("/code/{type}")
+    public void createCode(HttpServletRequest request, HttpServletResponse response, @PathVariable String type) throws Exception {
+        /**
+         * ServletWebRequest是一个包装类，
+         * 如果参数为new ServletWebRequest(request, response)
+         * 可以直接用ServletWebRequest request 去接，
+         * 省去了写response对象的麻烦，如果想要再获取response对象，只需要用request.getResponse()方法就可以
+         */
+        validateCodeProcessors.get(type + "CodeProcessor").create(new ServletWebRequest(request, response));
     }
 
-
-    /**
-     * 生成短信验证码
-     *
-     * @param request
-     * @param response
-     */
-    @GetMapping("/code/sms")
-    public void createSmsCode(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletRequestBindingException {
-        //1.获取传过来的电话号码
-        String mobile = ServletRequestUtils.getRequiredStringParameter(request, "mobile");
-        //2.生成SmsCode对象
-        ValidateCode smsCode = smsCodeGenerator.generate(new ServletWebRequest(request));
-        //3.将ImageCode对象写入到session
-        sessionStrategy.setAttribute(new ServletWebRequest(request), SESSION_KEY, smsCode);
-        //4.将生成的验证码通过手机号发给用户
-        smsCodeSender.send(mobile, smsCode.getCode());
-    }
 }
