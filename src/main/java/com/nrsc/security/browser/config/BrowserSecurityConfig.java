@@ -1,6 +1,8 @@
 package com.nrsc.security.browser.config;
 
+import com.nrsc.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
 import com.nrsc.security.core.properties.SecurityProperties;
+import com.nrsc.security.core.validate.code.SmsCodeFilter;
 import com.nrsc.security.core.validate.code.ValidateCodeFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -43,6 +45,10 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     //所以这里直接通过 @Autowired就可以拿到数据源
     private DataSource dataSource;
 
+    @Autowired
+    private SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;
+
+
     @Bean
     public PersistentTokenRepository persistentTokenRepository() {
         JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
@@ -61,14 +67,24 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
         //调用afterPropertiesSet，初始化urls
         validateCodeFilter.afterPropertiesSet();
 
+        //直接复制的上面的代码，之后会进行优化
+        SmsCodeFilter smsCodeFilter = new SmsCodeFilter();
+        smsCodeFilter.setAuthenticationFailureHandler(NRSCAuthenticationFailureHandler);
+        smsCodeFilter.setSecurityProperties(securityProperties);
+        //调用afterPropertiesSet，初始化urls
+        smsCodeFilter.afterPropertiesSet();
+
+
         //将图形验证码的校验逻辑放在用户名和密码校验逻辑之前
         http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(smsCodeFilter,UsernamePasswordAuthenticationFilter.class)
                 .formLogin()
                 .loginPage("/authentication/require")//登陆时进入的url-->相当于进入登陆页面
                 .loginProcessingUrl("/authentication/form")//告诉spring-security点击登陆时访问的url为/authentication/form
                 // ---->当spring-security接收到此url的请求后,会自动调用
                 //com.nrsc.security.browser.action.NRSCDetailsService中的loadUserByUsername
-
+                //.usernameParameter("user")-->与UsernamePasswordAuthenticationFilter中的usernameParameter对应,可修改其默认值
+                //.passwordParameter("code")-->与UsernamePasswordAuthenticationFilter中的passwordParameter对应,可修改其默认值
                 //进行登陆校验
                 .successHandler(NRSCAuthenticationSuccessHandler)//指定使用NRSCAuthenticationSuccessHandler处理登陆成功后的行为
                 .failureHandler(NRSCAuthenticationFailureHandler)//指定使用NNRSCAuthenticationFailureHandler处理登陆失败后的行为
@@ -92,6 +108,9 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticated()
 
                 .and()
-                .csrf().disable(); //关闭csrf
+                .csrf().disable() //关闭csrf
+
+                //将smsCodeAuthenticationSecurityConfig配置文件加到该配置文件里
+                .apply(smsCodeAuthenticationSecurityConfig);
     }
 }
