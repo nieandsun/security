@@ -1,5 +1,5 @@
 package com.nrsc.security.utils;
-import com.nrsc.security.VO.ResultVO;
+import com.nrsc.security.vo.ResultVO;
 
 /**
  * Created By: Sun Chuan

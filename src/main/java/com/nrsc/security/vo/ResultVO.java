@@ -1,4 +1,4 @@
-package com.nrsc.security.VO;
+package com.nrsc.security.vo;
 
 import lombok.Data;
 

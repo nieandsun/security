@@ -1,6 +1,6 @@
 package com.nrsc.security.browser.action;
 
-import com.nrsc.security.VO.ResultVO;
+import com.nrsc.security.vo.ResultVO;
 import com.nrsc.security.core.properties.SecurityConstants;
 import com.nrsc.security.core.properties.SecurityProperties;
 import com.nrsc.security.enums.ResultEnum;

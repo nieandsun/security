@@ -13,7 +13,7 @@ import org.springframework.web.context.request.ServletWebRequest;
  * @date: 2019/7/9 12:29
  * @Description: 注意验证码+ 超时时间可以进行配置
  */
-@Component("smsCodeGenerator")
+@Component("smsValidateCodeGenerator")
 public class SmsCodeGenerator implements ValidateCodeGenerator {
 
     @Autowired
