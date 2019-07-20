@@ -1,5 +1,6 @@
 package com.nrsc.security.core.validate.code;
 
+import com.nrsc.security.core.properties.SecurityConstants;
 import com.nrsc.security.core.properties.SecurityProperties;
 import lombok.Data;
 import org.apache.commons.lang.ArrayUtils;
@@ -49,7 +50,7 @@ public class SmsCodeFilter extends OncePerRequestFilter implements InitializingB
                 urls.add(configUrl);
             }
         }
-        urls.add("/authentication/mobile");
+        urls.add(SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE);
     }
 
 
@@ -84,7 +85,7 @@ public class SmsCodeFilter extends OncePerRequestFilter implements InitializingB
         ValidateCode codeInSession = (ValidateCode) sessionStrategy.getAttribute(request,
                 ValidateCodeProcessor.SESSION_KEY_PREFIX + "SMS");
 
-        String codeInRequest = ServletRequestUtils.getStringParameter(request.getRequest(), "smsCode");
+        String codeInRequest = ServletRequestUtils.getStringParameter(request.getRequest(),SecurityConstants.DEFAULT_PARAMETER_NAME_CODE_SMS);
 
         if (StringUtils.isBlank(codeInRequest)) {
             throw new ValidateCodeException("验证码的值不能为空");

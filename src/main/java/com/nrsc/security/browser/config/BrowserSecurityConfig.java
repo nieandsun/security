@@ -1,6 +1,7 @@
 package com.nrsc.security.browser.config;
 
 import com.nrsc.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
+import com.nrsc.security.core.properties.SecurityConstants;
 import com.nrsc.security.core.properties.SecurityProperties;
 import com.nrsc.security.core.validate.code.SmsCodeFilter;
 import com.nrsc.security.core.validate.code.ValidateCodeFilter;
@@ -79,8 +80,8 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(smsCodeFilter,UsernamePasswordAuthenticationFilter.class)
                 .formLogin()
-                .loginPage("/authentication/require")//登陆时进入的url-->相当于进入登陆页面
-                .loginProcessingUrl("/authentication/form")//告诉spring-security点击登陆时访问的url为/authentication/form
+                .loginPage(SecurityConstants.DEFAULT_UNAUTHENTICATION_URL)//登陆时进入的url-->相当于进入登陆页面
+                .loginProcessingUrl(SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_FORM)//告诉spring-security点击登陆时访问的url为/authentication/form
                 // ---->当spring-security接收到此url的请求后,会自动调用
                 //com.nrsc.security.browser.action.NRSCDetailsService中的loadUserByUsername
                 //.usernameParameter("user")-->与UsernamePasswordAuthenticationFilter中的usernameParameter对应,可修改其默认值
@@ -100,7 +101,7 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
 
                 //不进认证的url
-                .antMatchers("/code/*", "/authentication/require", securityProperties.getBrowser().getLoginPage())//指定不校验的url
+                .antMatchers(SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX+"/*", SecurityConstants.DEFAULT_UNAUTHENTICATION_URL, securityProperties.getBrowser().getLoginPage())//指定不校验的url
                 .permitAll()
 
                 //除了不进行认证的url其他请求都需要认证

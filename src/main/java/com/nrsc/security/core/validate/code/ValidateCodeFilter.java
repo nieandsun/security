@@ -1,6 +1,7 @@
 package com.nrsc.security.core.validate.code;
 
 
+import com.nrsc.security.core.properties.SecurityConstants;
 import com.nrsc.security.core.properties.SecurityProperties;
 import com.nrsc.security.core.validate.code.image.ImageCode;
 import lombok.Data;
@@ -67,7 +68,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
             }
         }
         //登陆肯定要进行图形验证码的校验，所以这里直接把登陆的uri放到urls里
-        urls.add("/authentication/form");
+        urls.add(SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_FORM);
     }
 
 
@@ -109,7 +110,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
         ImageCode codeInSession = (ImageCode) sessionStrategy.getAttribute(request,
                 ValidateCodeProcessor.SESSION_KEY_PREFIX + "IMAGE");
         //2.获取请求中传过来的图形验证码字符串
-        String codeInRequest = ServletRequestUtils.getStringParameter(request.getRequest(), "imageCode");
+        String codeInRequest = ServletRequestUtils.getStringParameter(request.getRequest(), SecurityConstants.DEFAULT_PARAMETER_NAME_CODE_IMAGE);
 
         //3.判断传过来的图形验证码字符串和session中存的是否相同
         if (StringUtils.isBlank(codeInRequest)) {

@@ -1,6 +1,7 @@
 package com.nrsc.security.browser.action;
 
 import com.nrsc.security.VO.ResultVO;
+import com.nrsc.security.core.properties.SecurityConstants;
 import com.nrsc.security.core.properties.SecurityProperties;
 import com.nrsc.security.enums.ResultEnum;
 import com.nrsc.security.utils.ResultVOUtil;
@@ -40,7 +41,7 @@ public class AuthenticationRequire {
     @Autowired
     private SecurityProperties securityProperties;
 
-    @RequestMapping("/authentication/require")
+    @RequestMapping(SecurityConstants.DEFAULT_UNAUTHENTICATION_URL)
     @ResponseStatus(code = HttpStatus.UNAUTHORIZED)
     public ResultVO requireAuthentication(HttpServletRequest request, HttpServletResponse response) throws IOException {
 

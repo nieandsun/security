@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 public class BrowserProperties {
     //指定默认的登陆页面
-    private String loginPage = "/nrsc-login.html";
+    private String loginPage = SecurityConstants.DEFAULT_LOGIN_PAGE_URL;
     //指定默认的处理成功与处理失败的方法
     private LoginType loginType = LoginType.JSON;
     //记住我的时间3600秒即1小时

@@ -1,5 +1,6 @@
 package com.nrsc.security.core.validate.code.impl;
 
+import com.nrsc.security.core.properties.SecurityConstants;
 import com.nrsc.security.core.validate.code.ValidateCode;
 import com.nrsc.security.core.validate.code.ValidateCodeGenerator;
 import com.nrsc.security.core.validate.code.ValidateCodeProcessor;
@@ -76,6 +77,6 @@ public abstract class AbstractValidateCodeProcessor<C extends ValidateCode> impl
      * @return
      */
     private String getProcessorType(ServletWebRequest request) {
-        return StringUtils.substringAfter(request.getRequest().getRequestURI(), "/code/");
+        return StringUtils.substringAfter(request.getRequest().getRequestURI(), SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX + "/");
     }
 }

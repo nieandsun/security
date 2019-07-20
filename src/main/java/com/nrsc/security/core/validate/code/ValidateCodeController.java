@@ -1,5 +1,6 @@
 package com.nrsc.security.core.validate.code;
 
+import com.nrsc.security.core.properties.SecurityConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,7 +32,7 @@ public class ValidateCodeController {
      * @param type
      * @throws Exception
      */
-    @GetMapping("/code/{type}")
+    @GetMapping(SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX + "/{type}")
     public void createCode(HttpServletRequest request, HttpServletResponse response, @PathVariable String type) throws Exception {
         /**
          * ServletWebRequest是一个包装类，
