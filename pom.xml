@@ -65,11 +65,17 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
+
+        <!--jar包版本先这样-->
+
+        <!--SessionStrategy等需要-->
         <dependency>
             <groupId>org.springframework.social</groupId>
             <artifactId>spring-social-web</artifactId>
             <version>1.1.4.RELEASE</version>
         </dependency>
+
+        <!--StringUtils需要-->
         <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
