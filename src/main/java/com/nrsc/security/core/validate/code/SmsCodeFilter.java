@@ -1,7 +1,7 @@
 package com.nrsc.security.core.validate.code;
 
 import com.nrsc.security.core.properties.SecurityConstants;
-import com.nrsc.security.core.properties.SecurityProperties;
+import com.nrsc.security.core.properties.NrscSecurityProperties;
 import lombok.Data;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
@@ -37,14 +37,14 @@ public class SmsCodeFilter extends OncePerRequestFilter implements InitializingB
 
     private Set<String> urls = new HashSet<>();
 
-    private SecurityProperties securityProperties;
+    private NrscSecurityProperties nrscSecurityProperties;
 
     private AntPathMatcher pathMatcher = new AntPathMatcher();
 
     @Override
     public void afterPropertiesSet() throws ServletException {
         super.afterPropertiesSet();
-        String[] configUrls = StringUtils.splitByWholeSeparatorPreserveAllTokens(securityProperties.getCode().getSms().getUrls(), ",");
+        String[] configUrls = StringUtils.splitByWholeSeparatorPreserveAllTokens(nrscSecurityProperties.getCode().getSms().getUrls(), ",");
         if (ArrayUtils.isNotEmpty(configUrls)) {
             for (String configUrl : configUrls) {
                 urls.add(configUrl);

@@ -1,6 +1,6 @@
 package com.nrsc.security.core.validate.code;
 
-import com.nrsc.security.core.properties.SecurityProperties;
+import com.nrsc.security.core.properties.NrscSecurityProperties;
 import com.nrsc.security.core.validate.code.image.ImageCodeGenerator;
 import com.nrsc.security.core.validate.code.sms.DefaultSmsCodeSender;
 import com.nrsc.security.core.validate.code.sms.SmsCodeSender;
@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ValidateCodeBeanConfig {
     @Autowired
-    private SecurityProperties securityProperties;
+    private NrscSecurityProperties nrscSecurityProperties;
 
     //@ConditionalOnMissingBean注解后面可以是name也可以是Type（XXX.class）
     //如果为name表示当spring容器里没有该名字的类时，被@ConditionalOnMissingBean注解的bean才可以注册到spring容器
@@ -39,7 +39,7 @@ public class ValidateCodeBeanConfig {
     @ConditionalOnMissingBean(name = "imageValidateCodeGenerator")
     public ValidateCodeGenerator imageValidateCodeGenerator() {
         ImageCodeGenerator codeGenerator = new ImageCodeGenerator();
-        codeGenerator.setSecurityProperties(securityProperties);
+        codeGenerator.setNrscSecurityProperties(nrscSecurityProperties);
         return codeGenerator;
     }
 

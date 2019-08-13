@@ -2,7 +2,7 @@ package com.nrsc.security.core.validate.code;
 
 
 import com.nrsc.security.core.properties.SecurityConstants;
-import com.nrsc.security.core.properties.SecurityProperties;
+import com.nrsc.security.core.properties.NrscSecurityProperties;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
      * 系统配置信息
      */
     @Autowired
-    private SecurityProperties securityProperties;
+    private NrscSecurityProperties nrscSecurityProperties;
     /**
      * 系统中的校验码处理器
      */
@@ -62,10 +62,10 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
         super.afterPropertiesSet();
 
         urlMap.put(SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_FORM, ValidateCodeType.IMAGE);
-        addUrlToMap(securityProperties.getCode().getImage().getUrls(), ValidateCodeType.IMAGE);
+        addUrlToMap(nrscSecurityProperties.getCode().getImage().getUrls(), ValidateCodeType.IMAGE);
 
         urlMap.put(SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE, ValidateCodeType.SMS);
-        addUrlToMap(securityProperties.getCode().getSms().getUrls(), ValidateCodeType.SMS);
+        addUrlToMap(nrscSecurityProperties.getCode().getSms().getUrls(), ValidateCodeType.SMS);
     }
 
     /**

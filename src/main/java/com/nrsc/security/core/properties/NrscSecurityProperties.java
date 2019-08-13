@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component //将此类注入到spring容器中
 @Data //不用写get set方法了
 @ConfigurationProperties(prefix = "nrsc.security") //指定以nrsc.security开头的配置会射入到该类中
-public class SecurityProperties {
+public class NrscSecurityProperties {
     /**封装浏览器相关的属性*/
     private BrowserProperties browser = new BrowserProperties();
     /**验证码相关的属性---可能包含图形验证码，短信验证码等，所以对其进行了又一次封装*/

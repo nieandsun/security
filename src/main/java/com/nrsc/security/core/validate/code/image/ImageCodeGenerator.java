@@ -1,6 +1,6 @@
 package com.nrsc.security.core.validate.code.image;
 
-import com.nrsc.security.core.properties.SecurityProperties;
+import com.nrsc.security.core.properties.NrscSecurityProperties;
 import com.nrsc.security.core.validate.code.ValidateCodeGenerator;
 import lombok.Data;
 import org.springframework.web.bind.ServletRequestUtils;
@@ -20,7 +20,7 @@ import java.util.Random;
 @Data
 public class ImageCodeGenerator implements ValidateCodeGenerator {
 
-    public SecurityProperties securityProperties;
+    public NrscSecurityProperties nrscSecurityProperties;
 
     @Override
     public ImageCode generate(ServletWebRequest request) {
@@ -28,10 +28,10 @@ public class ImageCodeGenerator implements ValidateCodeGenerator {
         //如果可以获取到请求中name为"width"的变量,将其转为int类型并作为返回值
         //如果获取不到请求中name为"width"的变量,则将第三个参数进行返回即下面的securityProperties.getCode().getImage().getWidth()
         int width = ServletRequestUtils.getIntParameter(request.getRequest(), "width",
-                securityProperties.getCode().getImage().getWidth());
+                nrscSecurityProperties.getCode().getImage().getWidth());
 
         int height = ServletRequestUtils.getIntParameter(request.getRequest(), "height",
-                securityProperties.getCode().getImage().getHeight());
+                nrscSecurityProperties.getCode().getImage().getHeight());
 
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
@@ -52,14 +52,14 @@ public class ImageCodeGenerator implements ValidateCodeGenerator {
         }
 
         String sRand = "";
-        for (int i = 0; i < securityProperties.getCode().getImage().getLength(); i++) {
+        for (int i = 0; i < nrscSecurityProperties.getCode().getImage().getLength(); i++) {
             String rand = String.valueOf(random.nextInt(10));
             sRand += rand;
             g.setColor(new Color(20 + random.nextInt(110), 20 + random.nextInt(110), 20 + random.nextInt(110)));
             g.drawString(rand, 13 * i + 6, 16);
         }
         g.dispose();
-        return new ImageCode(image, sRand, securityProperties.getCode().getImage().getExpireIn());
+        return new ImageCode(image, sRand, nrscSecurityProperties.getCode().getImage().getExpireIn());
     }
 
     private Color getRandColor(int fc, int bc) {

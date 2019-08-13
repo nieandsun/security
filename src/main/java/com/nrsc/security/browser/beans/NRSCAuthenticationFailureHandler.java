@@ -2,7 +2,7 @@ package com.nrsc.security.browser.beans;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nrsc.security.core.properties.LoginType;
-import com.nrsc.security.core.properties.SecurityProperties;
+import com.nrsc.security.core.properties.NrscSecurityProperties;
 import com.nrsc.security.enums.ResultEnum;
 import com.nrsc.security.utils.ResultVOUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +29,7 @@ public class NRSCAuthenticationFailureHandler extends SimpleUrlAuthenticationFai
     private ObjectMapper objectMapper;
 
     @Autowired
-    private SecurityProperties securityProperties;
+    private NrscSecurityProperties nrscSecurityProperties;
 
     /**
      * AuthenticationException里封装了用户登陆失败的错误信息
@@ -41,7 +41,7 @@ public class NRSCAuthenticationFailureHandler extends SimpleUrlAuthenticationFai
             throws IOException, ServletException {
 
         log.error("登陆失败");
-        if (LoginType.JSON.equals(securityProperties.getBrowser().getLoginType())) {
+        if (LoginType.JSON.equals(nrscSecurityProperties.getBrowser().getLoginType())) {
             //修改状态码
             httpServletResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
             //设置返回内容的数据形式和编码格式

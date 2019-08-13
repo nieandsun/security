@@ -2,7 +2,7 @@ package com.nrsc.security.browser.action;
 
 import com.nrsc.security.vo.ResultVO;
 import com.nrsc.security.core.properties.SecurityConstants;
-import com.nrsc.security.core.properties.SecurityProperties;
+import com.nrsc.security.core.properties.NrscSecurityProperties;
 import com.nrsc.security.enums.ResultEnum;
 import com.nrsc.security.utils.ResultVOUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -39,7 +39,7 @@ public class AuthenticationRequire {
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
     //如果用户输入以.html结尾的url时,跳转到从配置文件yml或properties里拿出配置的登陆页面
     @Autowired
-    private SecurityProperties securityProperties;
+    private NrscSecurityProperties nrscSecurityProperties;
 
     @RequestMapping(SecurityConstants.DEFAULT_UNAUTHENTICATION_URL)
     @ResponseStatus(code = HttpStatus.UNAUTHORIZED)
@@ -56,7 +56,7 @@ public class AuthenticationRequire {
 
             //如果请求url以.html结尾跳转到我们自己写的登录页----在前后端分离的项目里一般不会这样做
             if (StringUtils.endsWithIgnoreCase(targetUrl, ".html")) {
-                redirectStrategy.sendRedirect(request, response, securityProperties.getBrowser().getLoginPage());
+                redirectStrategy.sendRedirect(request, response, nrscSecurityProperties.getBrowser().getLoginPage());
             }
         }
         //如果有引发跳转的请求且不以html结尾

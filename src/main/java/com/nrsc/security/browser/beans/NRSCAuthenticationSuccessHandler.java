@@ -2,7 +2,7 @@ package com.nrsc.security.browser.beans;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nrsc.security.core.properties.LoginType;
-import com.nrsc.security.core.properties.SecurityProperties;
+import com.nrsc.security.core.properties.NrscSecurityProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -26,7 +26,7 @@ public class NRSCAuthenticationSuccessHandler extends SavedRequestAwareAuthentic
     private ObjectMapper objectMapper;
 
     @Autowired
-    private SecurityProperties securityProperties;
+    private NrscSecurityProperties nrscSecurityProperties;
     /**
      * Authentication封装了用户认证成功的信息
      */
@@ -39,7 +39,7 @@ public class NRSCAuthenticationSuccessHandler extends SavedRequestAwareAuthentic
         log.info("登陆成功");
 
         //如果设置了登陆成功返回json,则按如下方式进行返回
-        if (LoginType.JSON.equals(securityProperties.getBrowser().getLoginType())) {
+        if (LoginType.JSON.equals(nrscSecurityProperties.getBrowser().getLoginType())) {
             //设置返回内容的数据形式和编码格式
             httpServletResponse.setContentType("application/json;charset=UTF-8");
             //将户认证成功的信息以json数据的形式返回给前端
