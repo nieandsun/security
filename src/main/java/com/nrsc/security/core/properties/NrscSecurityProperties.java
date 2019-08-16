@@ -17,4 +17,6 @@ public class NrscSecurityProperties {
     private BrowserProperties browser = new BrowserProperties();
     /**验证码相关的属性---可能包含图形验证码，短信验证码等，所以对其进行了又一次封装*/
     private ValidateCodeProperties code = new ValidateCodeProperties();
+
+    private NrscSocialProperties social = new NrscSocialProperties();
 }
