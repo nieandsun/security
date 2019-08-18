@@ -2,8 +2,9 @@ package com.nrsc.security.browser;
 
 import com.nrsc.security.core.AbstractChannelSecurityConfig;
 import com.nrsc.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
-import com.nrsc.security.core.properties.SecurityConstants;
 import com.nrsc.security.core.properties.NrscSecurityProperties;
+import com.nrsc.security.core.properties.SecurityConstants;
+import com.nrsc.security.core.social.SocialConfig;
 import com.nrsc.security.core.validate.code.ValidateCodeSecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.social.security.SpringSocialConfigurer;
 
 import javax.sql.DataSource;
 
@@ -40,6 +42,12 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * @see SocialConfig#nrscSocialSecurityConfig()
+     */
+    @Autowired
+    private SpringSocialConfigurer nrscSocialSecurityConfig;
+
     @Bean
     public PersistentTokenRepository persistentTokenRepository() {
         JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
@@ -57,6 +65,8 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
         http.apply(validateCodeSecurityConfig)
                 .and()
                 .apply(smsCodeAuthenticationSecurityConfig)
+                .and()
+                .apply(nrscSocialSecurityConfig)
                 .and()
                 .rememberMe()
                 .tokenRepository(persistentTokenRepository())
