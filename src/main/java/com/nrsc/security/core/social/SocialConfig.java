@@ -1,5 +1,7 @@
 package com.nrsc.security.core.social;
 
+import com.nrsc.security.core.properties.NrscSecurityProperties;
+import com.nrsc.security.core.social.qq.NrscSpringSocialConfigurer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,6 +29,8 @@ public class SocialConfig extends SocialConfigurerAdapter {
 
     @Autowired
     private DataSource dataSource;
+    @Autowired
+    private NrscSecurityProperties nrscSecurityProperties;
 
 
     @Override
@@ -49,7 +53,8 @@ public class SocialConfig extends SocialConfigurerAdapter {
     public SpringSocialConfigurer nrscSocialSecurityConfig() {
         // 默认配置类，进行组件的组装
         // 包括了过滤器SocialAuthenticationFilter 添加到security过滤链中
-        SpringSocialConfigurer springSocialConfigurer = new SpringSocialConfigurer();
-        return springSocialConfigurer;
+        String filterProcessesUrl = nrscSecurityProperties.getSocial().getFilterProcessesUrl();
+        NrscSpringSocialConfigurer configurer = new NrscSpringSocialConfigurer(filterProcessesUrl);
+        return configurer;
     }
 }

@@ -10,4 +10,5 @@ import lombok.Data;
 @Data
 public class NrscSocialProperties {
     private QQProperties qq = new QQProperties();
+    private String filterProcessesUrl = "/auth";
 }

@@ -1,3 +1,14 @@
+server:
+  port: 80
+
+spring:
+  datasource:
+    #mysql版本为8.0.13
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/nrsc-security?characterEncoding=utf-8&serverTimezone=GMT&useSSL=false
+    username: root
+    password: 123456
+
 nrsc:
   security:
     code:
@@ -12,12 +23,9 @@ nrsc:
       qq:
         app-id: 100550231
         app-secret: 69b6ab57b22f3c2fe6a6149274e3295e
+        providerId: callback.do
+      filterProcessesUrl: /qqLogin
 
 
-spring:
-  datasource:
-    #mysql版本为8.0.13
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/nrsc-security?characterEncoding=utf-8&serverTimezone=GMT&useSSL=false
-    username: root
-    password: 123456
+
+
