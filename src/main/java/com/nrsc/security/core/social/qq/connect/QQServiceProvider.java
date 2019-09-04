@@ -3,7 +3,6 @@ package com.nrsc.security.core.social.qq.connect;
 import com.nrsc.security.core.social.qq.api.QQ;
 import com.nrsc.security.core.social.qq.api.QQImpl;
 import org.springframework.social.oauth2.AbstractOAuth2ServiceProvider;
-import org.springframework.social.oauth2.OAuth2Template;
 
 /**
  * @author : Sun Chuan
@@ -31,9 +30,9 @@ public class QQServiceProvider extends AbstractOAuth2ServiceProvider<QQ> {
      */
     public QQServiceProvider(String appId, String appSecret) {
         /**
-         * 先利用springsocial提供的OAuth2Operation实现类-->OAuth2Template走OAuth2协议的步骤(但有一点问题)
+         * 用我们自己的QQOAuth2Template对象来构建ServiceProvider对象
          */
-        super(new OAuth2Template(appId, appSecret, URL_AUTHORIZE, URL_ACCESS_TOKEN));
+        super(new QQOAuth2Template(appId, appSecret, URL_AUTHORIZE, URL_ACCESS_TOKEN));
         this.appId = appId;
     }
 

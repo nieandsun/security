@@ -1,6 +1,6 @@
 package com.nrsc.security.core.social.qq.api;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.social.oauth2.AbstractOAuth2ApiBinding;
@@ -20,7 +20,7 @@ import org.springframework.social.oauth2.TokenStrategy;
  */
 @Slf4j
 public class QQImpl extends AbstractOAuth2ApiBinding implements QQ {
-    private ObjectMapper objectMapper = new ObjectMapper();
+    //private ObjectMapper objectMapper = new ObjectMapper();
     /**
      * 获取openid的url, opendid与QQ号一一对应
      */
@@ -82,7 +82,9 @@ public class QQImpl extends AbstractOAuth2ApiBinding implements QQ {
 
         QQUserInfo userInfo = null;
         try {
-            userInfo = objectMapper.readValue(result, QQUserInfo.class);
+            //objectMapper解析时需要字段一样，不然就会报错，所以这里用了FastJson
+            //userInfo = objectMapper.readValue(result, QQUserInfo.class);
+            userInfo = JSON.parseObject(result,QQUserInfo.class);
             userInfo.setOpenId(openId);
             return userInfo;
         } catch (Exception e) {
