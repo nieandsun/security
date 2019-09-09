@@ -55,6 +55,9 @@ public class SocialConfig extends SocialConfigurerAdapter {
         // 包括了过滤器SocialAuthenticationFilter 添加到security过滤链中
         String filterProcessesUrl = nrscSecurityProperties.getSocial().getFilterProcessesUrl();
         NrscSpringSocialConfigurer configurer = new NrscSpringSocialConfigurer(filterProcessesUrl);
+
+        //指定SpringSocial/SpringSecurity跳向注册页面时的url为我们配置的url
+        configurer.signupUrl(nrscSecurityProperties.getBrowser().getSignUpUrl());
         return configurer;
     }
 }

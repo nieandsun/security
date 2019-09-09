@@ -16,9 +16,12 @@ nrsc:
         length: 6 #图形验证码的位数为6，将覆盖默认配置中的4
         width: 100 #图形验证码的宽度为100，将覆盖默认配置中的67，但由于请求中设置的宽度为200，所以真正的宽度将为200
         urls: /hello,/me*
+
     browser:
       loginPage: /nrsc-login.html
       loginType: JSON
+      signUpUrl: /nrsc-signUp.html
+
     social:
       qq:
         app-id: 100550231
