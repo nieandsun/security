@@ -1,10 +1,11 @@
 package com.nrsc.security.browser.action;
 
-import com.nrsc.security.vo.ResultVO;
-import com.nrsc.security.core.properties.SecurityConstants;
+import com.nrsc.security.browser.beans.SocialUserInfo;
 import com.nrsc.security.core.properties.NrscSecurityProperties;
+import com.nrsc.security.core.properties.SecurityConstants;
 import com.nrsc.security.enums.ResultEnum;
 import com.nrsc.security.utils.ResultVOUtil;
+import com.nrsc.security.vo.ResultVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,10 +14,14 @@ import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
+import org.springframework.social.connect.Connection;
+import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.ServletWebRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,6 +46,9 @@ public class AuthenticationRequire {
     @Autowired
     private NrscSecurityProperties nrscSecurityProperties;
 
+    @Autowired
+    private ProviderSignInUtils providerSignInUtils;
+
     @RequestMapping(SecurityConstants.DEFAULT_UNAUTHENTICATION_URL)
     @ResponseStatus(code = HttpStatus.UNAUTHORIZED)
     public ResultVO requireAuthentication(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -63,5 +71,23 @@ public class AuthenticationRequire {
         //或者如果没有引发跳转的请求----即直接访问authentication/require
         //返回一个未认证的状态码并引导用户进行登陆
         return ResultVOUtil.error(ResultEnum.UNAUTHORIZED.getCode(), ResultEnum.UNAUTHORIZED.getMessage());
+    }
+
+    /**
+     * 获取第三方用户信息
+     *
+     * @param request
+     * @return
+     */
+    @GetMapping("/social/user")
+    public SocialUserInfo getSocialUserInfo(HttpServletRequest request) {
+        SocialUserInfo userInfo = new SocialUserInfo();
+        //从session里取出封装了第三方信息QQ用户信息）的Connection对象
+        Connection<?> connection = providerSignInUtils.getConnectionFromSession(new ServletWebRequest(request));
+        userInfo.setProviderId(connection.getKey().getProviderId());
+        userInfo.setProviderUserId(connection.getKey().getProviderUserId());
+        userInfo.setNickName(connection.getDisplayName());
+        userInfo.setHeadImg(connection.getImageUrl());
+        return userInfo;
     }
 }
