@@ -10,6 +10,7 @@ import org.springframework.security.crypto.encrypt.Encryptors;
 import org.springframework.social.config.annotation.EnableSocial;
 import org.springframework.social.config.annotation.SocialConfigurerAdapter;
 import org.springframework.social.connect.ConnectionFactoryLocator;
+import org.springframework.social.connect.ConnectionSignUp;
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.social.security.SpringSocialConfigurer;
@@ -32,6 +33,12 @@ public class SocialConfig extends SocialConfigurerAdapter {
     private DataSource dataSource;
     @Autowired
     private NrscSecurityProperties nrscSecurityProperties;
+    /**
+     * 并不一定所有的系统都会在用户进行第三方登陆时“偷偷地”给用户注册一个新用户
+     * 所以这里需要标明required = false
+     */
+    @Autowired(required = false)
+    private ConnectionSignUp connectionSignUp;
 
 
     @Override
@@ -44,6 +51,11 @@ public class SocialConfig extends SocialConfigurerAdapter {
         NrscJdbcUsersConnectionRepository repository = new NrscJdbcUsersConnectionRepository(dataSource, connectionFactoryLocator, Encryptors.noOpText());
         //设置userconnection表的前缀
         repository.setTablePrefix("nrsc_");
+
+        if (connectionSignUp != null) {
+            //如果有spring容器里connectionSignUp这个bean时，将其注入到UsersConnectionRepository
+            repository.setConnectionSignUp(connectionSignUp);
+        }
         return repository;
     }
 
