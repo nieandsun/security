@@ -27,6 +27,10 @@ nrsc:
         app-id: 100550231
         app-secret: 69b6ab57b22f3c2fe6a6149274e3295e
         providerId: callback.do
+      weixin:
+        app-id: wxd99431bbff8305a0
+        app-secret: 60f78681d063590a469f1b297feff3c4
+
       filterProcessesUrl: /qqLogin
 
 
