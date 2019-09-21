@@ -41,4 +41,13 @@ public interface SecurityConstants {
      * 发送短信验证码 或 验证短信验证码时，传递手机号的参数的名称
      */
     String DEFAULT_PARAMETER_NAME_MOBILE = "mobile";
+    /**
+     * session失效默认的跳转地址
+     */
+    String DEFAULT_SESSION_INVALID_URL = "/nrsc-session-invalid.html";
+
+    /**
+     * 获取第三方账号的用户信息对应的url
+     */
+    String DEFAULT_GET_SOCIAL_USERINFO_URL = "/social/user";
 }

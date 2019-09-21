@@ -22,15 +22,23 @@ import java.io.IOException;
  * event里封装了request、response信息
  */
 @Slf4j
-public class NRSCExpiredSessionStrategy implements SessionInformationExpiredStrategy {
+public class NRSCExpiredSessionStrategy extends AbstractSessionStrategy implements SessionInformationExpiredStrategy {
+
+
+    /**
+     * @param invalidSessionUrl
+     */
+    public NRSCExpiredSessionStrategy(String invalidSessionUrl) {
+        super(invalidSessionUrl);
+    }
 
     @Override
     public void onExpiredSessionDetected(SessionInformationExpiredEvent event) throws IOException, ServletException {
-        String header = event.getRequest().getHeader("user-agent");
-        log.info("浏览器信息为：{}", header);
+        onSessionInvalid(event.getRequest(), event.getResponse());
+    }
 
-        //告诉前端并发登陆异常
-        event.getResponse().setContentType("application/json;charset=UTF-8");
-        event.getResponse().getWriter().write("并发登陆！！！");
+    @Override
+    protected boolean isConcurrency() {
+        return true;
     }
 }
