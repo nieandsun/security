@@ -33,7 +33,7 @@ import java.io.IOException;
  */
 @RestController
 @Slf4j
-public class AuthenticationRequire {
+public class BrowserSecurityController {
     //用户在访问我们的项目时,如果需要身份认证,spring-security会根据
     //我在SecurityConfig中loginPage的配置跳转到我自定义的url即/authentication/require,
     //但在这个跳转之前spring-security会将我们的请求缓存到RequestCache的session里,
@@ -90,4 +90,15 @@ public class AuthenticationRequire {
         userInfo.setHeadImg(connection.getImageUrl());
         return userInfo;
     }
+
+    /***
+     * session超时的时候会请求该方法
+     * @return
+     */
+    @GetMapping("/session/invalid")
+    public ResultVO sessionInvalid(){
+        return ResultVOUtil.error(ResultEnum.SESSION_INVALID.getCode(), ResultEnum.SESSION_INVALID.getMessage());
+    }
+
+
 }

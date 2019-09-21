@@ -47,7 +47,7 @@ public class NRSCAuthenticationFailureHandler extends SimpleUrlAuthenticationFai
             //设置返回内容的数据形式和编码格式
             httpServletResponse.setContentType("application/json;charset=UTF-8");
             //将抓到的错误信息以json数据的形式进行返回
-            httpServletResponse.getWriter().write(objectMapper.writeValueAsString(ResultVOUtil.error(ResultEnum.LOGINFAILURE.getCode(), e.getMessage())));
+            httpServletResponse.getWriter().write(objectMapper.writeValueAsString(ResultVOUtil.error(ResultEnum.LOGIN_FAILURE.getCode(), e.getMessage())));
         } else {
             super.onAuthenticationFailure(httpServletRequest, httpServletResponse, e);
         }

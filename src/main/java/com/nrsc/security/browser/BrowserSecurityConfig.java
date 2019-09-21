@@ -64,17 +64,20 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
 
         http.apply(validateCodeSecurityConfig)
                 .and()
-                .apply(smsCodeAuthenticationSecurityConfig)
+                    .apply(smsCodeAuthenticationSecurityConfig)
                 .and()
-                .apply(nrscSocialSecurityConfig)
+                    .apply(nrscSocialSecurityConfig)
                 .and()
-                .rememberMe()
-                .tokenRepository(persistentTokenRepository())
-                .tokenValiditySeconds(nrscSecurityProperties.getBrowser().getRememberMeSeconds())
-                .userDetailsService(NRSCDetailsService)
+                    .rememberMe()
+                    .tokenRepository(persistentTokenRepository())
+                    .tokenValiditySeconds(nrscSecurityProperties.getBrowser().getRememberMeSeconds())
+                    .userDetailsService(NRSCDetailsService)
                 .and()
-                .authorizeRequests()
-                .antMatchers(
+                    .sessionManagement()
+                    .invalidSessionUrl("/session/invalid")
+                .and()
+                    .authorizeRequests()
+                    .antMatchers(
                         SecurityConstants.DEFAULT_UNAUTHENTICATION_URL,
                         SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE,
                         nrscSecurityProperties.getBrowser().getLoginPage(),
@@ -82,13 +85,14 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
                         nrscSecurityProperties.getBrowser().getSignUpUrl(),
                         "/user/register",
                         "/social/user",
-                        "/js/**"
-                )
-                .permitAll()
-                .anyRequest()
-                .authenticated()
+                        "/js/**",
+                        "/session/invalid"
+                    )
+                    .permitAll()
+                    .anyRequest()
+                    .authenticated()
                 .and()
-                .csrf().disable();
+                    .csrf().disable();
 
     }
 
