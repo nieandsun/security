@@ -23,4 +23,7 @@ public class BrowserProperties {
 
     /**session相关的配置如session最大并发数量等*/
     private SessionProperties session = new SessionProperties();
+
+    /**退出登陆需要的url，默认为null*/
+    private String signOutUrl = "/";
 }

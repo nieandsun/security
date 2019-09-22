@@ -1,5 +1,6 @@
 package com.nrsc.security.browser;
 
+import com.nrsc.security.browser.logout.NRSCLogoutSuccessHandler;
 import com.nrsc.security.browser.session.NRSCExpiredSessionStrategy;
 import com.nrsc.security.browser.session.NRSCInvalidSessionStrategy;
 import com.nrsc.security.core.properties.NrscSecurityProperties;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.session.InvalidSessionStrategy;
 import org.springframework.security.web.session.SessionInformationExpiredStrategy;
 
@@ -32,5 +34,11 @@ public class BrowserSecurityBeanConfig {
     @ConditionalOnMissingBean(SessionInformationExpiredStrategy.class)
     public SessionInformationExpiredStrategy sessionInformationExpiredStrategy(){
         return new NRSCExpiredSessionStrategy(nrscSecurityProperties.getBrowser().getSession().getSessionInvalidUrl());
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(LogoutSuccessHandler.class)
+    public LogoutSuccessHandler logoutSuccessHandler(){
+        return new NRSCLogoutSuccessHandler(nrscSecurityProperties.getBrowser().getSignOutUrl());
     }
 }

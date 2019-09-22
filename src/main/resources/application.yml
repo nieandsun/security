@@ -34,6 +34,7 @@ nrsc:
       loginPage: /nrsc-login.html
       loginType: JSON
       signUpUrl: /nrsc-signUp.html
+      #signOutUrl: /nrsc-logout.html
 
     social:
       qq:

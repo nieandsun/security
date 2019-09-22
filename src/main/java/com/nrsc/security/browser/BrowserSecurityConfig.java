@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.session.InvalidSessionStrategy;
@@ -61,6 +62,9 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
     @Autowired
     private SessionInformationExpiredStrategy sessionInformationExpiredStrategy;
 
+    /**退出成功处理器*/
+    @Autowired
+    private LogoutSuccessHandler logoutSuccessHandler;
     @Bean
     public PersistentTokenRepository persistentTokenRepository() {
         JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
@@ -98,6 +102,17 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
                         .expiredSessionStrategy(sessionInformationExpiredStrategy)
                 .and()
                 .and()
+                //退出登陆相关的逻辑
+                    .logout()
+                    //自定义退出的url---默认的为/logout
+                    .logoutUrl("/signOut")
+                    //自定义退出成功处理器
+                    .logoutSuccessHandler(logoutSuccessHandler)
+                    //自定义退出成功后跳转的url与logoutSuccessHandler互斥
+                    //.logoutSuccessUrl("/index")
+                    //指定退出成功后删除的cookie
+                    .deleteCookies("JSESSIONID")
+                .and()
                     .authorizeRequests()
                     //配置不用进行认证校验的url
                     .antMatchers(
@@ -110,6 +125,8 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
                         nrscSecurityProperties.getBrowser().getSession().getSessionInvalidUrl(),
                         //获取第三方账号的用户信息的默认url
                         SecurityConstants.DEFAULT_GET_SOCIAL_USERINFO_URL,
+                        //退出登陆默认跳转的url
+                        nrscSecurityProperties.getBrowser().getSignOutUrl(),
                         "/user/register",
                         "/js/**"
                     )
