@@ -2,9 +2,19 @@ server:
   servlet:
     session:
       timeout: 600 # session超时时间为600秒
-  port: 80
+  port: 8080
 
 spring:
+  ### 指定用什么存储session信息
+  session:
+    store-type: redis
+  ###本地环境下不配置也可以
+#  redis:
+#    host: localhost
+#    port: 6379
+#    password: 123
+#    database: 0
+
   datasource:
     #mysql版本为8.0.13
     driver-class-name: com.mysql.cj.jdbc.Driver

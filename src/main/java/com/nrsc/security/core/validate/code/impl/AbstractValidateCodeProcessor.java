@@ -60,7 +60,12 @@ public abstract class AbstractValidateCodeProcessor<C extends ValidateCode> impl
      * @param validateCode
      */
     private void save(ServletWebRequest request, C validateCode) {
-        sessionStrategy.setAttribute(request, getSessionKey(request), validateCode);
+        //由于存放到redis里的对象必须是序列化的，---->对象里面的属性也必须是序列化的
+        // 而ImageCode中的BufferedImage对象没有实现Serializable接口，即不可序列化
+        // 因此不做如下处理还是会报序列化错误
+        // 实际业务中我们只需要把生成的验证码和过期时间存到session（redis）里就可以了，因此完全可以按照如下的方式去做
+        ValidateCode code = new ValidateCode(validateCode.getCode(),validateCode.getExpireTime());
+        sessionStrategy.setAttribute(request, getSessionKey(request), code);
     }
 
     /**
