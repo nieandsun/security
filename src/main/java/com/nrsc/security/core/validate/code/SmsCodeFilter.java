@@ -1,10 +1,10 @@
 package com.nrsc.security.core.validate.code;
 
-import com.nrsc.security.core.properties.SecurityConstants;
 import com.nrsc.security.core.properties.NrscSecurityProperties;
+import com.nrsc.security.core.properties.SecurityConstants;
 import lombok.Data;
-import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.social.connect.web.HttpSessionSessionStrategy;

@@ -3,7 +3,7 @@ package com.nrsc.security.core.validate.code.sms;
 import com.nrsc.security.core.properties.NrscSecurityProperties;
 import com.nrsc.security.core.validate.code.ValidateCode;
 import com.nrsc.security.core.validate.code.ValidateCodeGenerator;
-import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.ServletWebRequest;
