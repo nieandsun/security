@@ -1,0 +1,29 @@
+{
+  "groups": [
+    {
+      "name": "nrsc.security",
+      "type": "com.nrsc.security.core.properties.NrscSecurityProperties",
+      "sourceType": "com.nrsc.security.core.properties.NrscSecurityProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "nrsc.security.browser",
+      "type": "com.nrsc.security.core.properties.BrowserProperties",
+      "description": "封装浏览器相关的属性",
+      "sourceType": "com.nrsc.security.core.properties.NrscSecurityProperties"
+    },
+    {
+      "name": "nrsc.security.code",
+      "type": "com.nrsc.security.core.properties.ValidateCodeProperties",
+      "description": "验证码相关的属性---可能包含图形验证码，短信验证码等，所以对其进行了又一次封装",
+      "sourceType": "com.nrsc.security.core.properties.NrscSecurityProperties"
+    },
+    {
+      "name": "nrsc.security.social",
+      "type": "com.nrsc.security.core.properties.NrscSocialProperties",
+      "sourceType": "com.nrsc.security.core.properties.NrscSecurityProperties"
+    }
+  ],
+  "hints": []
+}

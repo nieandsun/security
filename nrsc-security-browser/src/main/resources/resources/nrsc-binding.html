@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>绑定/解绑</title>
+    <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+</head>
+<body>
+    <h2>绑定登陆账号</h2>
+    <form action="/connect/weixin" method="post">
+        <button type="submit">绑定微信</button>
+    </form>
+
+    <button onclick="deleteConnect()">微信解绑--无法完成</button>
+    <form action="/connect/weixin" method="post">
+        <input id="method" type="hidden" name="_method" value="delete"/>
+        <button>微信解绑</button>
+    </form>
+
+    <form action="/connect/callback.do" method="post">
+        <button type="submit">绑定QQ---redirect uri is illegal(100010)</button>
+    </form>
+
+       <!-- 这样发的delete请求有问题-->
+        <script type="text/javascript">
+            function deleteConnect() {
+                console.log("1111111111111111")
+                $.ajax({
+                    url: "/connect/weixin",
+                    type: "delete",
+                    success: function (res) {
+                    }
+                })
+            }
+        </script>
+</body>
+</html>

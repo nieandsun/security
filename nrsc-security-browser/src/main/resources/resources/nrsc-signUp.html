@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+</head>
+<body>
+<h2>Demo注册页</h2>
+<img id="headImage">hi, <span id="nickName"></span> ,欢迎登陆XXX网
+<hr>
+<form action="/user/register" method="post">
+    <table>
+        <tr>
+            <td>用户名:</td>
+            <td><input type="text" name="username"></td>
+        </tr>
+        <tr>
+            <td>密码:</td>
+            <td><input type="password" name="password"></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button type="submit" name="type" value="register">注册</button>
+                <button type="submit" name="type" value="binding">绑定</button>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<script type="text/javascript">
+    function getSocialUserInfo() {
+        console.log("11111111111111");
+        $.get({
+            url: "/social/user",
+            type: "get",
+            success: function (res) {
+                $("#headImage").attr("src", res.headImg);
+                $("#nickName").text(res.nickName);
+            }
+        })
+    }
+
+    window.onload = getSocialUserInfo;
+</script>
+</body>
+</html>
