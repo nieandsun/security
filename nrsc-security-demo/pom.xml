@@ -17,7 +17,7 @@
     <dependencies>
         <dependency>
             <groupId>com.nrsc.security</groupId>
-            <artifactId>nrsc-security-browser</artifactId>
+            <artifactId>nrsc-security-app</artifactId>
             <version>${nrsc.security.version}</version>
         </dependency>
     </dependencies>

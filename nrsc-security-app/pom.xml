@@ -12,5 +12,13 @@
 
     <artifactId>nrsc-security-app</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.nrsc.security</groupId>
+            <artifactId>nrsc-security-core</artifactId>
+            <version>${nrsc.security.version}</version>
+        </dependency>
+    </dependencies>
+
 
 </project>
