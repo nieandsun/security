@@ -1,0 +1,215 @@
+{
+  "front-version": "2.8.0.1",
+  "version": 3,
+  "nodes": [
+    {
+      "type": "Project",
+      "id": "f4646b71-9f10-445e-bb4c-c5fe9f6f3f21",
+      "lastModified": "2019-10-15T22:35:36.503+08:00",
+      "name": "nrsc"
+    },
+    {
+      "type": "Scenario",
+      "id": "4b975dfc-f540-44cf-ac4f-acb2bf350b25",
+      "lastModified": "2019-10-15T22:23:57.698+08:00",
+      "name": "security-app",
+      "requestOrder": [
+        "01授权码模式",
+        "02密码模式",
+        "03获取用户信息"
+      ],
+      "parentId": "f4646b71-9f10-445e-bb4c-c5fe9f6f3f21"
+    },
+    {
+      "uriEditor": true,
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": [
+            {
+              "enabled": true,
+              "type": "Text",
+              "name": "grant_type",
+              "value": "authorization_code"
+            },
+            {
+              "enabled": true,
+              "type": "Text",
+              "name": "client_id",
+              "value": "nrsc"
+            },
+            {
+              "enabled": true,
+              "type": "Text",
+              "name": "code",
+              "value": "qhkkSK"
+            },
+            {
+              "enabled": true,
+              "type": "Text",
+              "name": "redirect_uri",
+              "value": "http://www.example.com"
+            },
+            {
+              "enabled": true,
+              "type": "Text",
+              "name": "scope",
+              "value": "all"
+            }
+          ]
+        },
+        "bodyType": "Form",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "127.0.0.1:8080",
+        "path": "/oauth/token"
+      },
+      "id": "26e8b4de-6d24-4464-8a3f-23cb78f27a52",
+      "lastModified": "2019-10-15T22:35:32.561+08:00",
+      "name": "01授权码模式",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "Basic bnJzYzoxMjM0NTY="
+        },
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/x-www-form-urlencoded"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "4b975dfc-f540-44cf-ac4f-acb2bf350b25"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": [
+            {
+              "enabled": true,
+              "type": "Text",
+              "name": "grant_type",
+              "value": "password"
+            },
+            {
+              "enabled": true,
+              "type": "Text",
+              "name": "username",
+              "value": "yoyo"
+            },
+            {
+              "enabled": true,
+              "type": "Text",
+              "name": "password",
+              "value": "123456"
+            },
+            {
+              "enabled": true,
+              "type": "Text",
+              "name": "scope",
+              "value": "all"
+            }
+          ]
+        },
+        "bodyType": "Form",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "127.0.0.1:8080",
+        "path": "/oauth/token"
+      },
+      "id": "ffb2b99d-d3f6-41c4-82bc-49a03464f203",
+      "lastModified": "2019-10-15T22:35:25.999+08:00",
+      "name": "02密码模式",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "Basic bnJzYzoxMjM0NTY="
+        },
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/x-www-form-urlencoded"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "4b975dfc-f540-44cf-ac4f-acb2bf350b25"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded"
+        },
+        "bodyType": "Text",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "127.0.0.1:8080",
+        "path": "/user/me3"
+      },
+      "id": "93f5daa8-7c11-4f22-80cf-e5a7cf682b87",
+      "lastModified": "2019-10-15T22:35:36.503+08:00",
+      "name": "03获取用户信息",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "bearer 9d3522d7-8805-41ef-a67f-81b72316f0bd"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "4b975dfc-f540-44cf-ac4f-acb2bf350b25"
+    }
+  ]
+}
