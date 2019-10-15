@@ -48,5 +48,18 @@ nrsc:
       filterProcessesUrl: /qqLogin
 
 
+security:
+  oauth2:
+    client:
+      # 真实项目中应放在数据库里
+      client-id: nrsc
+      client-secret: 123456
+      # 可以在这里简单的指定一个或多个redirect-uri，但真实项目中不会这样做，而是将其放在数据库里
+      # 大家可以好好想想为什么资源服务器非要我们指定redirect-uri呢？
+      registered-redirect-uri:
+        - http://www.example.com
+        - http://www.nrsc.com
+
+
 
 

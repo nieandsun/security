@@ -94,7 +94,12 @@
             <artifactId>spring-social-security</artifactId>
             <version>${spring.social}</version>
         </dependency>
-
+        <!--spring security oauth2-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-oauth2</artifactId>
+        </dependency>
+        <!--springboot相关jar包-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
