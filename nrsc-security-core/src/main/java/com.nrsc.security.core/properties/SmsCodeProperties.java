@@ -14,7 +14,7 @@ public class SmsCodeProperties {
     private int length = 6;
 
     /**验证码过期时间*/
-    private int expireIn = 60;
+    private int expireIn = 300;
 
     /**需要进行图形验证码校验的所有URL，需以逗号分隔开*/
     private String urls;

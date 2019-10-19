@@ -28,6 +28,9 @@ public abstract class AbstractValidateCodeProcessor<C extends ValidateCode> impl
     @Autowired
     private Map<String, ValidateCodeGenerator> validateCodeGenerators;
 
+    @Autowired
+    private ValidateCodeRepository validateCodeRepository;
+
     @Override
     public void create(ServletWebRequest request) throws Exception {
         C validateCode = generate(request);
@@ -64,8 +67,9 @@ public abstract class AbstractValidateCodeProcessor<C extends ValidateCode> impl
         // 而ImageCode中的BufferedImage对象没有实现Serializable接口，即不可序列化
         // 因此不做如下处理还是会报序列化错误
         // 实际业务中我们只需要把生成的验证码和过期时间存到session（redis）里就可以了，因此完全可以按照如下的方式去做
-        ValidateCode code = new ValidateCode(validateCode.getCode(),validateCode.getExpireTime());
-        sessionStrategy.setAttribute(request, getSessionKey(request), code);
+        ValidateCode code = new ValidateCode(validateCode.getCode(), validateCode.getExpireTime());
+        //使用validateCodeRepository接口方法保存验证码
+        validateCodeRepository.save(request, code, getValidateCodeType(request));
     }
 
     /**
@@ -102,37 +106,38 @@ public abstract class AbstractValidateCodeProcessor<C extends ValidateCode> impl
     @Override
     public void validate(ServletWebRequest request) {
 
-        ValidateCodeType processorType = getValidateCodeType(request);
-        String sessionKey = getSessionKey(request);
-
-        C codeInSession = (C) sessionStrategy.getAttribute(request, sessionKey);
+        ValidateCodeType codeType = getValidateCodeType(request);
+        //获取验证码
+        C codeInSession = (C) validateCodeRepository.get(request, codeType);
 
         String codeInRequest;
         try {
             codeInRequest = ServletRequestUtils.getStringParameter(request.getRequest(),
-                    processorType.getParamNameOnValidate());
+                    codeType.getParamNameOnValidate());
         } catch (ServletRequestBindingException e) {
             throw new ValidateCodeException("获取验证码的值失败");
         }
 
         if (StringUtils.isBlank(codeInRequest)) {
-            throw new ValidateCodeException(processorType + "验证码的值不能为空");
+            throw new ValidateCodeException(codeType + "验证码的值不能为空");
         }
 
         if (codeInSession == null) {
-            throw new ValidateCodeException(processorType + "验证码不存在");
+            throw new ValidateCodeException(codeType + "验证码不存在");
         }
 
         if (codeInSession.isExpried()) {
-            sessionStrategy.removeAttribute(request, sessionKey);
-            throw new ValidateCodeException(processorType + "验证码已过期");
+            //验证码过期将验证码移出
+            validateCodeRepository.remove(request, codeType);
+            throw new ValidateCodeException(codeType + "验证码已过期");
         }
 
         if (!StringUtils.equals(codeInSession.getCode(), codeInRequest)) {
-            throw new ValidateCodeException(processorType + "验证码不匹配");
+            throw new ValidateCodeException(codeType + "验证码不匹配");
         }
+        //校验成功后将验证码移出
+        validateCodeRepository.remove(request, codeType);
 
-        sessionStrategy.removeAttribute(request, sessionKey);
     }
 
 }

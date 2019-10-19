@@ -54,29 +54,27 @@ public class NrscResourcesServerConfig  extends ResourceServerConfigurerAdapter 
                 .successHandler(NRSCAuthenticationSuccessHandler)
                 .failureHandler(NRSCAuthenticationFailureHandler);
 
-        //验证码有一些问题：因为验证码会放到session里，校验也需要从session里取，
-        // 但是在token认证的情景下是不需session参与的
-        // 所以这里先注释掉，下篇文章再解决
-        http//.apply(validateCodeSecurityConfig)
-                //	.and()
-                .apply(smsCodeAuthenticationSecurityConfig)
+        //将验证码校验逻辑放开
+        http.apply(validateCodeSecurityConfig)
                 .and()
-                .apply(nrscSocialSecurityConfig)
+                  .apply(smsCodeAuthenticationSecurityConfig)
                 .and()
-                .authorizeRequests()
-                .antMatchers(
-                        SecurityConstants.DEFAULT_UNAUTHENTICATION_URL,
-                        SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE,
-                        nrscSecurityProperties.getBrowser().getLoginPage(),
-                        SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX+"/*",
-                        nrscSecurityProperties.getBrowser().getSignUpUrl(),
-                        nrscSecurityProperties.getBrowser().getSession().getSessionInvalidUrl(),
-                        nrscSecurityProperties.getBrowser().getSignOutUrl(),
-                        "/user/regist")
-                .permitAll()
-                .anyRequest()
-                .authenticated()
+                  .apply(nrscSocialSecurityConfig)
                 .and()
-                .csrf().disable();
+                    .authorizeRequests()
+                    .antMatchers(
+                            SecurityConstants.DEFAULT_UNAUTHENTICATION_URL,
+                            SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE,
+                            nrscSecurityProperties.getBrowser().getLoginPage(),
+                            SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX+"/*",
+                            nrscSecurityProperties.getBrowser().getSignUpUrl(),
+                            nrscSecurityProperties.getBrowser().getSession().getSessionInvalidUrl(),
+                            nrscSecurityProperties.getBrowser().getSignOutUrl(),
+                            "/user/regist")
+                    .permitAll()
+                    .anyRequest()
+                    .authenticated()
+                .and()
+                    .csrf().disable();
     }
 }
