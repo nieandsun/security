@@ -5,18 +5,19 @@
     {
       "type": "Project",
       "id": "f4646b71-9f10-445e-bb4c-c5fe9f6f3f21",
-      "lastModified": "2019-10-15T22:35:36.503+08:00",
+      "lastModified": "2019-10-19T19:08:56.179+08:00",
       "name": "nrsc"
     },
     {
       "type": "Scenario",
       "id": "4b975dfc-f540-44cf-ac4f-acb2bf350b25",
-      "lastModified": "2019-10-15T22:23:57.698+08:00",
+      "lastModified": "2019-10-19T19:09:13.681+08:00",
       "name": "security-app",
       "requestOrder": [
         "01授权码模式",
         "02密码模式",
-        "03获取用户信息"
+        "03获取用户信息",
+        "04 模拟app情况下的登陆"
       ],
       "parentId": "f4646b71-9f10-445e-bb4c-c5fe9f6f3f21"
     },
@@ -206,6 +207,66 @@
           "enabled": true,
           "name": "Authorization",
           "value": "bearer 9d3522d7-8805-41ef-a67f-81b72316f0bd"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "4b975dfc-f540-44cf-ac4f-acb2bf350b25"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": [
+            {
+              "enabled": true,
+              "type": "Text",
+              "name": "username",
+              "value": "yoyo"
+            },
+            {
+              "enabled": true,
+              "type": "Text",
+              "name": "password",
+              "value": "123456"
+            }
+          ]
+        },
+        "bodyType": "Form",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "127.0.0.1:8080",
+        "path": "/authentication/form"
+      },
+      "id": "ab74283d-1ac6-472b-82af-9202c9fc8f07",
+      "lastModified": "2019-10-19T19:08:56.180+08:00",
+      "name": "04 模拟app情况下的登陆",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/x-www-form-urlencoded"
+        },
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "Basic bnJzYzoxMjM0NTY="
         }
       ],
       "metaInfo": {},
