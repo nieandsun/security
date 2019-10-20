@@ -26,6 +26,10 @@ public interface SecurityConstants {
      */
     String DEFAULT_LOGIN_PROCESSING_URL_MOBILE = "/authentication/mobile";
     /**
+     * 默认的OPENID登录请求处理url
+     */
+    String DEFAULT_LOGIN_PROCESSING_URL_OPENID = "/authentication/openid";
+    /**
      * 默认登录页面
      */
     String DEFAULT_LOGIN_PAGE_URL = "/nrsc-login.html";
@@ -48,9 +52,17 @@ public interface SecurityConstants {
     /**
      * 默认的注册url
      */
-    String  DEFAULT_SIGNUP_URL = "/nrsc-signUp.html";
+    String DEFAULT_SIGNUP_URL = "/nrsc-signUp.html";
     /**
      * 获取第三方账号的用户信息对应的url
      */
     String DEFAULT_GET_SOCIAL_USERINFO_URL = "/social/user";
+    /**
+     * openid参数名
+     */
+    String DEFAULT_PARAMETER_NAME_OPENID = "openId";
+    /**
+     * providerId参数名
+     */
+    String DEFAULT_PARAMETER_NAME_PROVIDERID = "providerId";
 }

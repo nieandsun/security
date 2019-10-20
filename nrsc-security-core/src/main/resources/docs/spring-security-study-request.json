@@ -3,15 +3,9 @@
   "version": 3,
   "nodes": [
     {
-      "type": "Project",
-      "id": "f4646b71-9f10-445e-bb4c-c5fe9f6f3f21",
-      "lastModified": "2019-10-19T23:17:51.321+08:00",
-      "name": "nrsc"
-    },
-    {
       "type": "Scenario",
       "id": "4b975dfc-f540-44cf-ac4f-acb2bf350b25",
-      "lastModified": "2019-10-19T21:19:36.663+08:00",
+      "lastModified": "2019-10-20T22:35:33.016+08:00",
       "name": "security-app",
       "requestOrder": [
         "01授权码模式",
@@ -19,7 +13,8 @@
         "03获取用户信息",
         "04用户名密码登陆",
         "05短信验证码发送",
-        "07短信验证码登陆"
+        "07短信验证码登陆",
+        "08OpenId登陆"
       ],
       "parentId": "f4646b71-9f10-445e-bb4c-c5fe9f6f3f21"
     },
@@ -384,6 +379,72 @@
       ],
       "metaInfo": {},
       "parentId": "4b975dfc-f540-44cf-ac4f-acb2bf350b25"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": [
+            {
+              "enabled": true,
+              "type": "Text",
+              "name": "providerId",
+              "value": "callback.do"
+            },
+            {
+              "enabled": true,
+              "type": "Text",
+              "name": "openId",
+              "value": "3C20DCCD0474C89C139E3BF1962E9083"
+            }
+          ]
+        },
+        "bodyType": "Form",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "127.0.0.1:8080",
+        "path": "/authentication/openid"
+      },
+      "id": "1f682dff-ab45-4959-b260-65f831b5183c",
+      "lastModified": "2019-10-20T23:15:51.242+08:00",
+      "name": "08OpenId登陆",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/x-www-form-urlencoded"
+        },
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "Basic bnJzYzoxMjM0NTY="
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "4b975dfc-f540-44cf-ac4f-acb2bf350b25"
+    },
+    {
+      "type": "Project",
+      "id": "f4646b71-9f10-445e-bb4c-c5fe9f6f3f21",
+      "lastModified": "2019-10-20T23:15:51.242+08:00",
+      "name": "nrsc"
     }
   ]
 }

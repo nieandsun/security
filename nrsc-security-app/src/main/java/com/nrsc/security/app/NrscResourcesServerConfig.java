@@ -1,5 +1,6 @@
 package com.nrsc.security.app;
 
+import com.nrsc.security.app.social.openid.OpenIdAuthenticationSecurityConfig;
 import com.nrsc.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
 import com.nrsc.security.core.properties.NrscSecurityProperties;
 import com.nrsc.security.core.properties.SecurityConstants;
@@ -35,6 +36,10 @@ public class NrscResourcesServerConfig  extends ResourceServerConfigurerAdapter 
     @Autowired
     private ValidateCodeSecurityConfig validateCodeSecurityConfig;
 
+    //openId校验配置类
+    @Autowired
+    private OpenIdAuthenticationSecurityConfig openIdAuthenticationSecurityConfig;
+
     /**
      * @see SocialConfig#nrscSocialSecurityConfig()
      */
@@ -57,9 +62,11 @@ public class NrscResourcesServerConfig  extends ResourceServerConfigurerAdapter 
         //将验证码校验逻辑放开
         http.apply(validateCodeSecurityConfig)
                 .and()
-                  .apply(smsCodeAuthenticationSecurityConfig)
+                    .apply(smsCodeAuthenticationSecurityConfig)
                 .and()
-                  .apply(nrscSocialSecurityConfig)
+                    .apply(nrscSocialSecurityConfig)
+                .and()
+                    .apply(openIdAuthenticationSecurityConfig)
                 .and()
                     .authorizeRequests()
                     .antMatchers(
