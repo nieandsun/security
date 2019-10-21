@@ -2,7 +2,6 @@ package com.nrsc.security.core.social;
 
 import com.nrsc.security.core.properties.NrscSecurityProperties;
 import com.nrsc.security.core.social.jdbc.NrscJdbcUsersConnectionRepository;
-import com.nrsc.security.core.social.qq.NrscSpringSocialConfigurer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,6 +32,9 @@ public class SocialConfig extends SocialConfigurerAdapter {
     private DataSource dataSource;
     @Autowired
     private NrscSecurityProperties nrscSecurityProperties;
+    //设置springsocial成功处理器相关的类
+    @Autowired(required = false)
+    private SocialAuthenticationFilterPostProcessor socialAuthenticationFilterPostProcessor;
     /**
      * 并不一定所有的系统都会在用户进行第三方登陆时“偷偷地”给用户注册一个新用户
      * 所以这里需要标明required = false
@@ -71,6 +73,9 @@ public class SocialConfig extends SocialConfigurerAdapter {
 
         //指定SpringSocial/SpringSecurity跳向注册页面时的url为我们配置的url
         configurer.signupUrl(nrscSecurityProperties.getBrowser().getSignUpUrl());
+
+        //设置springsocial的认证成功处理器 -- app下可以返回token，browser下使用spring-security默认的
+        configurer.setSocialAuthenticationFilterPostProcessor(socialAuthenticationFilterPostProcessor);
         return configurer;
     }
 

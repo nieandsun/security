@@ -2,7 +2,7 @@ server:
   servlet:
     session:
       timeout: 600 # session超时时间为600秒
-  port: 8080
+  port: 80
 
 spring:
   ### 指定用什么存储session信息
