@@ -1,6 +1,7 @@
 package com.nrsc.security.controller;
 
 
+import com.nrsc.security.app.utils.AppSignUpUtils;
 import com.nrsc.security.domain.NrscUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -22,6 +23,9 @@ public class UserController {
 
     @Autowired
     private ProviderSignInUtils providerSignInUtils;
+
+    @Autowired
+    private AppSignUpUtils appSignUpUtils;
 
     @GetMapping("/hello")
     public String sayHello() {
@@ -54,6 +58,10 @@ public class UserController {
         //不管是注册用户还是绑定用户，都会拿到一个用户唯一标识，如用户名。
         String userId = user.getUsername();
         //将用户userId和第三方用户信息建立关系并将其插入到userconnection表
-        providerSignInUtils.doPostSignUp(userId, new ServletWebRequest(request));
+        //providerSignInUtils.doPostSignUp(userId, new ServletWebRequest(request));
+
+        //使用我们自己的utils将用户userId和第三方用户信息建立关系、将该关系插入到userconnection表
+        //和删掉redis中保存的deviceId信息
+        appSignUpUtils.doPostSignUp(new ServletWebRequest(request), userId);
     }
 }

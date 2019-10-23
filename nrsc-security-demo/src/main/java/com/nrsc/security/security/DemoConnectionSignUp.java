@@ -2,7 +2,6 @@ package com.nrsc.security.security;
 
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionSignUp;
-import org.springframework.stereotype.Component;
 
 /**
  * @author : Sun Chuan
@@ -10,7 +9,7 @@ import org.springframework.stereotype.Component;
  * Description：ConnectionSignUp类，需要注入到JdbcUsersConnectionRepository类里，
  * 以实现第三方登陆时免注册的逻辑功能
  */
-@Component
+//@Component
 public class DemoConnectionSignUp implements ConnectionSignUp {
     @Override
     public String execute(Connection<?> connection) {

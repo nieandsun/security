@@ -1,4 +1,4 @@
-package com.nrsc.security.browser.beans;
+package com.nrsc.security.core.pojo;
 
 import lombok.Data;
 

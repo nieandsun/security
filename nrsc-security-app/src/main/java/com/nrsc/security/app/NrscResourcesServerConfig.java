@@ -77,7 +77,7 @@ public class NrscResourcesServerConfig  extends ResourceServerConfigurerAdapter 
                             nrscSecurityProperties.getBrowser().getSignUpUrl(),
                             nrscSecurityProperties.getBrowser().getSession().getSessionInvalidUrl(),
                             nrscSecurityProperties.getBrowser().getSignOutUrl(),
-                            "/user/regist")
+                            "/user/register","/social/signUp")
                     .permitAll()
                     .anyRequest()
                     .authenticated()
