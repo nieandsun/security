@@ -1,4 +1,4 @@
-package com.nrsc.security.app.social.impl;
+package com.nrsc.security.app.processor;
 
 import com.nrsc.security.core.social.SocialAuthenticationFilterPostProcessor;
 import org.springframework.beans.factory.annotation.Autowired;

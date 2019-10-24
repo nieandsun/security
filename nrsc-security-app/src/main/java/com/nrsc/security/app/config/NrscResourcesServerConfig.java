@@ -1,4 +1,4 @@
-package com.nrsc.security.app;
+package com.nrsc.security.app.config;
 
 import com.nrsc.security.app.social.openid.OpenIdAuthenticationSecurityConfig;
 import com.nrsc.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;

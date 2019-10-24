@@ -1,4 +1,4 @@
-package com.nrsc.security.app;
+package com.nrsc.security.app.processor;
 
 import com.nrsc.security.core.social.NrscSpringSocialConfigurer;
 import org.apache.commons.lang3.StringUtils;
