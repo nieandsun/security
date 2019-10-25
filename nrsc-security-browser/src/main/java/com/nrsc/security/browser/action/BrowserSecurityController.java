@@ -3,7 +3,7 @@ package com.nrsc.security.browser.action;
 import com.nrsc.security.core.pojo.SocialUserInfo;
 import com.nrsc.security.core.enums.ResultEnum;
 import com.nrsc.security.core.properties.NrscSecurityProperties;
-import com.nrsc.security.core.properties.SecurityConstants;
+import com.nrsc.security.core.enums.SecurityConstants;
 import com.nrsc.security.core.utils.ResultVOUtil;
 import com.nrsc.security.core.vo.ResultVO;
 import lombok.extern.slf4j.Slf4j;

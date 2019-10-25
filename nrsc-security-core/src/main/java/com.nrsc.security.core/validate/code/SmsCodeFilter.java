@@ -1,7 +1,7 @@
 package com.nrsc.security.core.validate.code;
 
 import com.nrsc.security.core.properties.NrscSecurityProperties;
-import com.nrsc.security.core.properties.SecurityConstants;
+import com.nrsc.security.core.enums.SecurityConstants;
 import lombok.Data;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;

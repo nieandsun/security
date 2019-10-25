@@ -2,7 +2,7 @@ package com.nrsc.security.app.authentication;
 
 import com.alibaba.fastjson.JSON;
 import com.nrsc.security.core.enums.ResultEnum;
-import com.nrsc.security.core.properties.LoginType;
+import com.nrsc.security.core.enums.LoginType;
 import com.nrsc.security.core.properties.NrscSecurityProperties;
 import com.nrsc.security.core.utils.ResultVOUtil;
 import lombok.extern.slf4j.Slf4j;

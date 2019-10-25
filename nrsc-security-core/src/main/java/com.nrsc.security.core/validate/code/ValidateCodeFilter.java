@@ -2,7 +2,7 @@ package com.nrsc.security.core.validate.code;
 
 
 import com.nrsc.security.core.properties.NrscSecurityProperties;
-import com.nrsc.security.core.properties.SecurityConstants;
+import com.nrsc.security.core.enums.SecurityConstants;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,5 +1,7 @@
 package com.nrsc.security.core.properties;
 
+import com.nrsc.security.core.enums.LoginType;
+import com.nrsc.security.core.enums.SecurityConstants;
 import lombok.Data;
 
 /**

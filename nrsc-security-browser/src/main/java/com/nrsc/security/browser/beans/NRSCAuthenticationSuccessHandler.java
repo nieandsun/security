@@ -1,7 +1,7 @@
 package com.nrsc.security.browser.beans;
 
 import com.alibaba.fastjson.JSON;
-import com.nrsc.security.core.properties.LoginType;
+import com.nrsc.security.core.enums.LoginType;
 import com.nrsc.security.core.properties.NrscSecurityProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
 package com.nrsc.security.core.validate.code.sms;
 
-import com.nrsc.security.core.properties.SecurityConstants;
+import com.nrsc.security.core.enums.SecurityConstants;
 import com.nrsc.security.core.validate.code.ValidateCode;
 import com.nrsc.security.core.validate.code.impl.AbstractValidateCodeProcessor;
 import org.springframework.beans.factory.annotation.Autowired;

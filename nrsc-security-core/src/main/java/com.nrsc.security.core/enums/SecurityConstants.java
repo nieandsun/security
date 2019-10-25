@@ -1,4 +1,4 @@
-package com.nrsc.security.core.properties;
+package com.nrsc.security.core.enums;
 
 /**
  * @author: Sun Chuan

@@ -1,6 +1,6 @@
 package com.nrsc.security.core.validate.code;
 
-import com.nrsc.security.core.properties.SecurityConstants;
+import com.nrsc.security.core.enums.SecurityConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
