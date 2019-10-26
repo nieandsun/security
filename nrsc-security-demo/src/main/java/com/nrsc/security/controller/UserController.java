@@ -2,7 +2,11 @@ package com.nrsc.security.controller;
 
 
 import com.nrsc.security.app.utils.AppSignUpUtils;
+import com.nrsc.security.core.properties.NrscSecurityProperties;
 import com.nrsc.security.domain.NrscUser;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.ServletWebRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 
 @RestController
 @RequestMapping("/user")
@@ -26,6 +31,9 @@ public class UserController {
 
     @Autowired
     private AppSignUpUtils appSignUpUtils;
+
+    @Autowired
+    private NrscSecurityProperties nrscSecurityProperties;
 
     @GetMapping("/hello")
     public String sayHello() {
@@ -40,8 +48,19 @@ public class UserController {
     }
 
     @GetMapping("/me2")
-    public Object getCurrentUser2(Authentication authentication) {
+    public Object getCurrentUser2(Authentication authentication, HttpServletRequest request) throws UnsupportedEncodingException {
         //方式2---方式1的简写版
+        //从请求头中获取到JWT
+        String token = StringUtils.substringAfter(request.getHeader("Authorization"), "bearer ");
+        //对JWT进行解析,注意由于JWT生成时编码格式用的UTF-8（看源码可以追踪到）
+        //但Jwts工具用到的默认编码格式不是，所以要设置其编码格式为UTF-8
+        Claims claims = Jwts.parser()
+                .setSigningKey(nrscSecurityProperties.getOauth2().getJwtSigningKey().getBytes("UTF-8"))
+                .parseClaimsJws(token).getBody();
+        //取出扩展信息，并打印
+        String company = (String) claims.get("company");
+
+        System.err.println(company);
         return authentication;
     }
 

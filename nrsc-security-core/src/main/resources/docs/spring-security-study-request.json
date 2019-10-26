@@ -3,9 +3,124 @@
   "version": 3,
   "nodes": [
     {
+      "type": "Project",
+      "id": "f4646b71-9f10-445e-bb4c-c5fe9f6f3f21",
+      "lastModified": "2019-10-26T23:30:16.981+08:00",
+      "name": "nrsc"
+    },
+    {
+      "type": "Service",
+      "id": "aae42777-2ad0-4a08-8188-dc51b37a48ea",
+      "lastModified": "2019-10-20T11:18:29.608+08:00",
+      "name": "elegant",
+      "parentId": "f4646b71-9f10-445e-bb4c-c5fe9f6f3f21"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": [
+            {
+              "enabled": true,
+              "type": "Text",
+              "name": "name",
+              "value": "yoyo"
+            },
+            {
+              "enabled": true,
+              "type": "Text",
+              "name": "age",
+              "value": "11"
+            }
+          ]
+        },
+        "bodyType": "Form",
+        "autoSetLength": true,
+        "textBody": "{\n  \"name\":\"yoyo\",\n  \"age\":30\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "127.0.0.1:8080",
+        "path": "/user/saveUserInfo"
+      },
+      "id": "e484ecb1-8ee4-411f-a12f-9d2462263794",
+      "lastModified": "2019-10-20T13:16:08.414+08:00",
+      "name": "Request 1",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/x-www-form-urlencoded"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "aae42777-2ad0-4a08-8188-dc51b37a48ea"
+    },
+    {
+      "uriEditor": true,
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded"
+        },
+        "bodyType": "Text",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": [
+            {
+              "enabled": true,
+              "name": "name",
+              "value": "yoyo"
+            },
+            {
+              "enabled": true,
+              "name": "age",
+              "value": "30"
+            }
+          ]
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "127.0.0.1:8080",
+        "path": "/user/getUser"
+      },
+      "id": "bc9c009e-c8c6-4b2e-9257-5ebe38bd24fe",
+      "lastModified": "2019-10-20T13:22:33.822+08:00",
+      "name": "Request 2",
+      "headers": [],
+      "metaInfo": {},
+      "parentId": "aae42777-2ad0-4a08-8188-dc51b37a48ea"
+    },
+    {
       "type": "Scenario",
       "id": "4b975dfc-f540-44cf-ac4f-acb2bf350b25",
-      "lastModified": "2019-10-20T22:35:33.016+08:00",
+      "lastModified": "2019-10-26T22:59:10.657+08:00",
       "name": "security-app",
       "requestOrder": [
         "01授权码模式",
@@ -14,7 +129,9 @@
         "04用户名密码登陆",
         "05短信验证码发送",
         "07短信验证码登陆",
-        "08OpenId登陆"
+        "08OpenId登陆",
+        "09拿授权码请求微信完成登陆流程",
+        "10刷新token请求"
       ],
       "parentId": "f4646b71-9f10-445e-bb4c-c5fe9f6f3f21"
     },
@@ -441,10 +558,121 @@
       "parentId": "4b975dfc-f540-44cf-ac4f-acb2bf350b25"
     },
     {
-      "type": "Project",
-      "id": "f4646b71-9f10-445e-bb4c-c5fe9f6f3f21",
-      "lastModified": "2019-10-20T23:15:51.242+08:00",
-      "name": "nrsc"
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded"
+        },
+        "bodyType": "Text",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": [
+            {
+              "enabled": true,
+              "name": "code",
+              "value": "021c7Fi70sIRbG1WKQg70khOi70c7Fi1"
+            },
+            {
+              "enabled": true,
+              "name": "state",
+              "value": "218d6e68-d2a5-4716-8f1a-9a652a427b01"
+            }
+          ]
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "www.pinzhi365.com",
+        "path": "/qqLogin/weixin"
+      },
+      "id": "11b0b639-5d52-4d46-96ac-a2b7fb57a42b",
+      "lastModified": "2019-10-21T23:16:33.663+08:00",
+      "name": "09拿授权码请求微信完成登陆流程",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "Basic d3hkOTk0MzFiYmZmODMwNWEwOjYwZjc4NjgxZDA2MzU5MGE0NjlmMWIyOTdmZWZmM2M0"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "4b975dfc-f540-44cf-ac4f-acb2bf350b25"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": [
+            {
+              "enabled": true,
+              "type": "Text",
+              "name": "grant_type",
+              "value": "refresh_token"
+            },
+            {
+              "enabled": true,
+              "type": "Text",
+              "name": "refresh_token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJ5b3lvIiwic2NvcGUiOlsiYWxsIl0sImF0aSI6IjU4YTgzMjIwLTc5MzItNDM3Ni1iZjE4LTNjMTVjYWU0OTg2NyIsImNvbXBhbnkiOiJOUlNDIiwiZXhwIjoxNTcyMTEwNzEzLCJhdXRob3JpdGllcyI6WyJhZG1pbiJdLCJqdGkiOiJmMDgwYjg4Yy00NDBlLTRhZGYtODMwOS1jODc0YjIzNzE0MmQiLCJjbGllbnRfaWQiOiJucnNjIn0.SbbvNQJ8v29v_UomMr502j2h28LzMrUaeuDUHBo-WKs"
+            },
+            {
+              "enabled": true,
+              "type": "Text",
+              "name": "scope",
+              "value": "all"
+            }
+          ]
+        },
+        "bodyType": "Form",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "127.0.0.1:8080",
+        "path": "/oauth/token"
+      },
+      "id": "13ae826e-8c8f-4f38-994d-46a1fa9dc41f",
+      "lastModified": "2019-10-26T23:30:16.981+08:00",
+      "name": "10刷新token请求",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "Basic bnJzYzoxMjM0NTY="
+        },
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/x-www-form-urlencoded"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "4b975dfc-f540-44cf-ac4f-acb2bf350b25"
     }
   ]
 }

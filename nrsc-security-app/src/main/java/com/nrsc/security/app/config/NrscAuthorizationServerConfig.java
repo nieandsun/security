@@ -10,10 +10,14 @@ import org.springframework.security.oauth2.config.annotation.configurers.ClientD
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
+import org.springframework.security.oauth2.provider.token.TokenEnhancer;
+import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 
 import javax.sql.DataSource;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author : Sun Chuan
@@ -42,6 +46,9 @@ public class NrscAuthorizationServerConfig extends AuthorizationServerConfigurer
     @Autowired(required = false)
     private JwtAccessTokenConverter jwtAccessTokenConverter;
 
+    @Autowired(required = false)
+    private TokenEnhancer jwtTokenEnhancer;
+
     /***
      * 入口点相关配置  ---  token的生成，存储方式等在这里配置
      * @param endpoints
@@ -56,10 +63,19 @@ public class NrscAuthorizationServerConfig extends AuthorizationServerConfigurer
                 //在实现了AuthorizationServerConfigurerAdapter适配器类后，必须指定下面两项
                 .authenticationManager(authenticationManager)
                 .userDetailsService(NRSCDetailsService);
-        //将JwtAccessTokenConverter设置到token的生成类中
-        if (jwtAccessTokenConverter != null) {
-            endpoints
-                    .accessTokenConverter(jwtAccessTokenConverter);
+
+        if (jwtAccessTokenConverter != null && jwtTokenEnhancer != null) {
+            //配置增强器链
+            // 并利用增强器链将生成jwt的TokenEnhancer（jwtAccessTokenConverter）
+            // 和我们扩展的TokenEnhancer设置到token的生成类中
+            TokenEnhancerChain enhancerChain = new TokenEnhancerChain();
+            List<TokenEnhancer> enhancers = new ArrayList<>();
+            enhancers.add(jwtTokenEnhancer);
+            enhancers.add(jwtAccessTokenConverter);
+            enhancerChain.setTokenEnhancers(enhancers);
+            endpoints.tokenEnhancer(enhancerChain);
+                    //将JwtAccessTokenConverter设置到token的生成类中
+                   // .accessTokenConverter(jwtAccessTokenConverter);
         }
     }
 

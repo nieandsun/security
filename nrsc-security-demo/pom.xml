@@ -13,18 +13,25 @@
     <artifactId>nrsc-security-demo</artifactId>
 
 
-
     <dependencies>
         <dependency>
             <groupId>com.nrsc.security</groupId>
             <artifactId>nrsc-security-app</artifactId>
             <version>${nrsc.security.version}</version>
         </dependency>
-<!--        <dependency>
+        <!--
+        <dependency>
             <groupId>com.nrsc.security</groupId>
             <artifactId>nrsc-security-browser</artifactId>
             <version>${nrsc.security.version}</version>
-        </dependency>-->
+        </dependency>
+        -->
+        <!--解析JWT的工具-->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version>
+        </dependency>
 
     </dependencies>
 
