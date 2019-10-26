@@ -4,7 +4,7 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-/**
+/***
  * "大盒子"类-----------------用于统一管理项目中所有由yml或properties文件传入的变量值
  * @author : Sun Chuan
  * @date : 2019/6/20 22:13
@@ -13,10 +13,16 @@ import org.springframework.stereotype.Component;
 @Data //不用写get set方法了
 @ConfigurationProperties(prefix = "nrsc.security") //指定以nrsc.security开头的配置会射入到该类中
 public class NrscSecurityProperties {
-    /**封装浏览器相关的属性*/
+    /***封装浏览器相关的属性*/
     private BrowserProperties browser = new BrowserProperties();
-    /**验证码相关的属性---可能包含图形验证码，短信验证码等，所以对其进行了又一次封装*/
+
+    /***验证码相关的属性---可能包含图形验证码，短信验证码等，所以对其进行了又一次封装*/
     private ValidateCodeProperties code = new ValidateCodeProperties();
 
+    /***springsocial相关的配置*/
     private NrscSocialProperties social = new NrscSocialProperties();
+
+    /***认证服务器相关的配置*/
+    private Oauth2ServerProperties oauth2 = new Oauth2ServerProperties();
+
 }

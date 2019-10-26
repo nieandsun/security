@@ -11,6 +11,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 
 import javax.sql.DataSource;
 
@@ -22,7 +23,10 @@ import javax.sql.DataSource;
 @Configuration
 @EnableAuthorizationServer
 public class NrscAuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
-    //对正在进行授权的用户进行认证+校验时需要用到
+    /***
+     * 对正在进行授权的用户进行认证+校验时需要用到
+     */
+
     @Autowired
     private UserDetailsService NRSCDetailsService;
 
@@ -30,14 +34,13 @@ public class NrscAuthorizationServerConfig extends AuthorizationServerConfigurer
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private TokenStore redisTokenStore;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private TokenStore tokenStore;
 
     @Autowired
     private DataSource dataSource;
 
+    @Autowired(required = false)
+    private JwtAccessTokenConverter jwtAccessTokenConverter;
 
     /***
      * 入口点相关配置  ---  token的生成，存储方式等在这里配置
@@ -48,12 +51,16 @@ public class NrscAuthorizationServerConfig extends AuthorizationServerConfigurer
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints
                 //指定使用的TokenStore，tokenStore用来存取token，默认使用InMemoryTokenStore
-                //这里使用redis存储token
-                .tokenStore(redisTokenStore)
+                .tokenStore(tokenStore)
                 //下面的配置主要用来指定"对正在进行授权的用户进行认证+校验"的类
                 //在实现了AuthorizationServerConfigurerAdapter适配器类后，必须指定下面两项
                 .authenticationManager(authenticationManager)
                 .userDetailsService(NRSCDetailsService);
+        //将JwtAccessTokenConverter设置到token的生成类中
+        if (jwtAccessTokenConverter != null) {
+            endpoints
+                    .accessTokenConverter(jwtAccessTokenConverter);
+        }
     }
 
     /***

@@ -51,6 +51,17 @@ public class UserController {
         return user;
     }
 
+    /***
+     * JWT 情况下获取的principal是一个字符串
+     * @param user
+     * @return
+     */
+    @GetMapping("/me4")
+    public Object getCurrentUser4(@AuthenticationPrincipal String user) {
+        //方式3，只获取User对象
+        return user;
+    }
+
     @PostMapping("/register")
     public void register(NrscUser user, HttpServletRequest request) {
         //注册用户相关逻辑-----》即向用户表里插入一条用户数据-----》这里不写了
