@@ -1,7 +1,6 @@
 package com.nrsc.security.controller;
 
 
-import com.nrsc.security.app.utils.AppSignUpUtils;
 import com.nrsc.security.core.properties.NrscSecurityProperties;
 import com.nrsc.security.domain.NrscUser;
 import io.jsonwebtoken.Claims;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.request.ServletWebRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
@@ -29,8 +27,8 @@ public class UserController {
     @Autowired
     private ProviderSignInUtils providerSignInUtils;
 
-    @Autowired
-    private AppSignUpUtils appSignUpUtils;
+//    @Autowired
+//    private AppSignUpUtils appSignUpUtils;
 
     @Autowired
     private NrscSecurityProperties nrscSecurityProperties;
@@ -92,6 +90,6 @@ public class UserController {
 
         //使用我们自己的utils将用户userId和第三方用户信息建立关系、将该关系插入到userconnection表
         //和删掉redis中保存的deviceId信息
-        appSignUpUtils.doPostSignUp(new ServletWebRequest(request), userId);
+        //appSignUpUtils.doPostSignUp(new ServletWebRequest(request), userId);
     }
 }

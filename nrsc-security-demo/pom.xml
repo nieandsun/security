@@ -14,18 +14,19 @@
 
 
     <dependencies>
+
+        <!--
         <dependency>
             <groupId>com.nrsc.security</groupId>
             <artifactId>nrsc-security-app</artifactId>
             <version>${nrsc.security.version}</version>
         </dependency>
-        <!--
+        -->
         <dependency>
             <groupId>com.nrsc.security</groupId>
             <artifactId>nrsc-security-browser</artifactId>
             <version>${nrsc.security.version}</version>
         </dependency>
-        -->
         <!--解析JWT的工具-->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>

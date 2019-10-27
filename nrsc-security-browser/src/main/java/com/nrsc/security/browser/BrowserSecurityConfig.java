@@ -9,6 +9,7 @@ import com.nrsc.security.core.validate.code.ValidateCodeSecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
@@ -117,7 +118,7 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
                         nrscSecurityProperties.getBrowser().getSignUpUrl(),
                         //session失效默认的跳转地址
                         nrscSecurityProperties.getBrowser().getSession().getSessionInvalidUrl(),
-                        //获取第三方账号的用户信息的默认url
+                        //获取第三方账号的用户信息的默认url----微信、QQ登陆没找到与本系统的关联关系时用到---此时没登陆
                         SecurityConstants.DEFAULT_GET_SOCIAL_USERINFO_URL,
                         //退出登陆默认跳转的url
                         nrscSecurityProperties.getBrowser().getSignOutUrl(),
@@ -125,6 +126,7 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
                         "/js/**"
                     )
                     .permitAll()
+                    .antMatchers(HttpMethod.GET,"/user/*").hasRole("ADMIN")
                     //指明除了上面不用认证的url外其他请求都需要认证校验
                     .anyRequest()
                     .authenticated()
