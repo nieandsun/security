@@ -72,6 +72,7 @@ public class NrscResourcesServerConfig  extends ResourceServerConfigurerAdapter 
                     .antMatchers(
                             SecurityConstants.DEFAULT_UNAUTHENTICATION_URL,
                             SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE,
+                            SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_OPENID,
                             nrscSecurityProperties.getBrowser().getLoginPage(),
                             SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX+"/*",
                             nrscSecurityProperties.getBrowser().getSignUpUrl(),
