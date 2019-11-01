@@ -123,7 +123,10 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
                         //退出登陆默认跳转的url
                         nrscSecurityProperties.getBrowser().getSignOutUrl(),
                         "/user/register",
-                        "/js/**"
+                        "/js/**",
+                        "/swagger-ui.html",
+                        "/swagger-ui.html/**",
+                        "/webjars/**", "/swagger-resources/**", "/v2/**","/configuration/**"
                     )
                     .permitAll()
                     .antMatchers(HttpMethod.GET,"/user/*").hasRole("ADMIN")
