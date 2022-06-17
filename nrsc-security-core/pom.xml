@@ -12,7 +12,7 @@
     </parent>
 
     <properties>
-        <com.alibaba.fastjson>1.2.61</com.alibaba.fastjson>
+        <com.alibaba.fastjson>1.2.83</com.alibaba.fastjson>
         <commons.collections>3.2.2</commons.collections>
         <spring.social>1.1.6.RELEASE</spring.social>
     </properties>
